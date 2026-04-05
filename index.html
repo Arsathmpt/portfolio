@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mohamed Arsath · Data Science Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -16,12 +17,8 @@
 }
 html{scroll-behavior:smooth;cursor:none;}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;}
-
-/* Cursor */
 .cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s;}
 .cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(0,255,178,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
-
-/* Animated orbs */
 .bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.12;animation:orbFloat 12s ease-in-out infinite;}
 .orb1{width:600px;height:600px;background:var(--purple);top:-200px;left:-150px;}
@@ -29,11 +26,7 @@ body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;over
 .orb3{width:400px;height:400px;background:var(--blue);bottom:-100px;left:30%;animation-delay:-8s;}
 .orb4{width:300px;height:300px;background:var(--accent);top:60%;left:-100px;animation-delay:-2s;}
 @keyframes orbFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-40px) scale(1.05);}}
-
-/* Grid */
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,178,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,178,.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:rgba(5,5,15,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
 .nav-logo{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);letter-spacing:.2em;}
 .nav-links{display:flex;gap:2rem;list-style:none;}
@@ -41,8 +34,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
 .nav-links a:hover,.nav-links a.active{color:var(--accent);}
 .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-
-/* HERO */
 #hero{min-height:100vh;display:flex;align-items:center;padding:0 4rem;position:relative;z-index:1;overflow:hidden;}
 .hero-content{max-width:700px;}
 .hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeUp .8s .2s forwards;}
@@ -57,8 +48,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,255,178,.3);}
 .btn-outline{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--border2);color:var(--text);padding:.9rem 2rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-decoration:none;letter-spacing:.1em;transition:border-color .2s,color .2s,box-shadow .2s;}
 .btn-outline:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 20px rgba(168,85,247,.15);}
-
-/* Hero floating badges */
 .hero-badges{position:absolute;right:4rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1rem;opacity:0;animation:fadeLeft .8s 1s forwards;}
 .hbadge{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:1.1rem 1.4rem;display:flex;align-items:center;gap:.9rem;animation:badgeFloat 4s ease-in-out infinite;transition:border-color .3s;}
 .hbadge:nth-child(2){animation-delay:-1.5s;}
@@ -68,14 +57,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hbadge-icon{font-size:1.6rem;}
 .hbadge-num{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);line-height:1;}
 .hbadge-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
-
-/* Scroll */
 .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp .8s 1.4s forwards;}
 .scroll-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:sdrop 1.5s ease-in-out infinite;}
 @keyframes sdrop{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
 .scroll-text{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;}
-
-/* SECTIONS */
 section{position:relative;z-index:1;}
 .sw{padding:7rem 4rem;}
 .sh{margin-bottom:4rem;}
@@ -83,8 +68,6 @@ section{position:relative;z-index:1;}
 .sey::before{content:'';width:30px;height:1px;background:var(--accent);}
 .st{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.05;letter-spacing:.02em;}
 .c1{color:var(--accent);}.c2{color:var(--pink);}.c3{color:var(--blue);}.c4{color:var(--purple);}.c5{color:var(--yellow);}
-
-/* ABOUT */
 #about{background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%);}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
 .about-text p{color:var(--muted);line-height:1.85;margin-bottom:1.2rem;font-size:.97rem;}
@@ -100,8 +83,6 @@ section{position:relative;z-index:1;}
 .focus-item{display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--muted);padding:.65rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;}
 .focus-item:hover{border-color:var(--accent);color:var(--text);}
 .fdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-
-/* SKILLS */
 #skills{background:var(--surface);}
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;}
 .skill-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
@@ -125,8 +106,6 @@ section{position:relative;z-index:1;}
 .tb{color:var(--blue);border-color:rgba(77,159,255,.25);background:rgba(77,159,255,.06);}
 .ty{color:var(--yellow);border-color:rgba(255,209,102,.25);background:rgba(255,209,102,.06);}
 .tm{color:var(--muted);border-color:var(--border);background:var(--surface);}
-
-/* PROJECTS */
 #projects{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;}
 .proj-card{background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:2rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;}
@@ -153,8 +132,6 @@ section{position:relative;z-index:1;}
 .plink{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;text-decoration:none;padding:.45rem 1rem;border-radius:6px;border:1px solid;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;}
 .plink-gh{color:var(--text);border-color:var(--border2);}
 .plink-gh:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,255,178,.05);}
-
-/* EXPERIENCE */
 #experience{background:var(--surface);}
 .exp-item{display:grid;grid-template-columns:220px 1fr;gap:3rem;padding:3rem 0;border-bottom:1px solid var(--border);}
 .exp-item:last-child{border-bottom:none;}
@@ -163,14 +140,12 @@ section{position:relative;z-index:1;}
 .exp-role{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.03em;margin-bottom:1.2rem;}
 .exp-bullets{list-style:none;}
 .exp-bullets li{font-size:.9rem;color:var(--muted);line-height:1.75;padding-left:1.4rem;position:relative;margin-bottom:.6rem;}
-.exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);}
+.exp-bullets li::before{content:'&#9658;';position:absolute;left:0;color:var(--accent);}
 .exp-bullets li strong{color:var(--text);}
-
-/* CERTIFICATES */
 #certificates{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);}
 .certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
 .cert-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.6rem;display:flex;align-items:flex-start;gap:1rem;text-decoration:none;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
-.cert-card::after{content:'↗';position:absolute;top:1rem;right:1rem;font-size:.85rem;color:var(--muted);transition:color .2s,transform .2s;}
+.cert-card::after{content:'&#8599;';position:absolute;top:1rem;right:1rem;font-size:.85rem;color:var(--muted);transition:color .2s,transform .2s;}
 .cert-card:hover{transform:translateY(-5px);}
 .cc1:hover{border-color:var(--blue);box-shadow:0 12px 40px rgba(77,159,255,.12);}
 .cc1:hover::after{color:var(--blue);transform:translate(2px,-2px);}
@@ -187,12 +162,7 @@ section{position:relative;z-index:1;}
 .ci4{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.2);}
 .cert-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:.95rem;color:var(--text);margin-bottom:.25rem;line-height:1.3;}
 .cert-issuer{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;}
-.it1{color:var(--blue);}
-.it2{color:var(--orange);}
-.it3{color:var(--accent);}
-.it4{color:var(--purple);}
-
-/* CONTACT */
+.it1{color:var(--blue);}.it2{color:var(--orange);}.it3{color:var(--accent);}.it4{color:var(--purple);}
 #contact{background:var(--bg);}
 .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
 .contact-info p{color:var(--muted);font-size:.95rem;line-height:1.85;margin-bottom:2rem;}
@@ -210,29 +180,23 @@ section{position:relative;z-index:1;}
 .form-group input,.form-group textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical;}
 .form-group input:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,178,.08);}
 .form-group textarea{min-height:120px;}
-.form-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--blue));color:#05050F;border:none;border-radius:8px;padding:.95rem;font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;cursor:none;transition:opacity .2s,transform .2s,box-shadow .2s;}
+.form-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--blue));color:#05050F;border:none;border-radius:8px;padding:.95rem;font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity .2s,transform .2s,box-shadow .2s;}
 .form-btn:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,178,.25);}
-
-/* FOOTER */
+.form-status{margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-align:center;display:none;padding:.7rem 1rem;border-radius:8px;}
+.form-status.success{display:block;background:rgba(0,255,178,.08);border:1px solid rgba(0,255,178,.25);color:var(--accent);}
+.form-status.error{display:block;background:rgba(255,77,141,.08);border:1px solid rgba(255,77,141,.25);color:var(--pink);}
 footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface);}
 .fl,.fr{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.1em;}
 .fr a{color:var(--accent);text-decoration:none;}
-
-/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeLeft{from{opacity:0;transform:translateX(28px);}to{opacity:1;transform:translateX(0);}}
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 .rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
-
-/* Typed cursor */
 .tcursor{display:inline-block;width:3px;height:.85em;background:var(--accent);margin-left:3px;animation:blink .8s step-end infinite;vertical-align:middle;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-
-/* RESPONSIVE */
 @media(max-width:900px){
-  nav{padding:1rem 1.5rem;}
-  .nav-links{display:none;}
+  nav{padding:1rem 1.5rem;}.nav-links{display:none;}
   #hero{padding:6rem 1.5rem 3rem;flex-direction:column;}
   .hero-badges{position:static;transform:none;margin-top:2.5rem;flex-direction:row;flex-wrap:wrap;}
   .sw{padding:4rem 1.5rem;}
@@ -243,20 +207,15 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="ring"></div>
-
 <div class="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="orb orb4"></div>
+  <div class="orb orb1"></div><div class="orb orb2"></div>
+  <div class="orb orb3"></div><div class="orb orb4"></div>
 </div>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">// M · ARSATH</div>
+  <div class="nav-logo">// M &middot; ARSATH</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -267,61 +226,28 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-content">
     <div class="hero-eyebrow">BCA Data Science &middot; Vels University &middot; Chennai</div>
-    <h1 class="hero-name">
-      Mohamed<br>
-      <span class="stroke">Arsath</span><span class="dot">.</span>
-    </h1>
-    <p class="hero-tagline">
-      I build <strong>real AI systems</strong> &mdash; computer vision pipelines,
-      gesture recognition, analytics dashboards.
-      <strong>Data Scientist</strong> in the making, shipping work that actually works.
-    </p>
+    <h1 class="hero-name">Mohamed<br><span class="stroke">Arsath</span><span class="dot">.</span></h1>
+    <p class="hero-tagline">I build <strong>real AI systems</strong> &mdash; computer vision pipelines, gesture recognition, analytics dashboards. <strong>Data Scientist</strong> in the making, shipping work that actually works.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">View My Work &rarr;</a>
       <a href="https://github.com/Arsathmpt" target="_blank" class="btn-outline">&#9881; GitHub</a>
-      <a href="mailto:arsath.techdata@gmail.com" class="btn-outline">&#9993; Hire Me</a>
+      <a href="/cdn-cgi/l/email-protection#0d6c7f7e6c79652379686e65696c796c4d6a606c6461236e6260" class="btn-outline">&#9993; Hire Me</a>
     </div>
   </div>
   <div class="hero-badges">
-    <div class="hbadge">
-      <div class="hbadge-icon">&#128663;</div>
-      <div>
-        <div class="hbadge-num">98%</div>
-        <div class="hbadge-label">Detection Acc.</div>
-      </div>
-    </div>
-    <div class="hbadge">
-      <div class="hbadge-icon">&#128202;</div>
-      <div>
-        <div class="hbadge-num">407K+</div>
-        <div class="hbadge-label">Records Analyzed</div>
-      </div>
-    </div>
-    <div class="hbadge">
-      <div class="hbadge-icon">&#129311;</div>
-      <div>
-        <div class="hbadge-num">9</div>
-        <div class="hbadge-label">Gesture Classes</div>
-      </div>
-    </div>
+    <div class="hbadge"><div class="hbadge-icon">&#128663;</div><div><div class="hbadge-num">98%</div><div class="hbadge-label">Detection Acc.</div></div></div>
+    <div class="hbadge"><div class="hbadge-icon">&#128202;</div><div><div class="hbadge-num">407K+</div><div class="hbadge-label">Records Analyzed</div></div></div>
+    <div class="hbadge"><div class="hbadge-icon">&#129311;</div><div><div class="hbadge-num">9</div><div class="hbadge-label">Gesture Classes</div></div></div>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-dot"></div>
-    <div class="scroll-text">Scroll Down</div>
-  </div>
+  <div class="scroll-hint"><div class="scroll-dot"></div><div class="scroll-text">Scroll Down</div></div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">01 // About Me</div>
-      <h2 class="st">Who I <span class="c1">Am</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">01 // About Me</div><h2 class="st">Who I <span class="c1">Am</span></h2></div>
     <div class="about-grid">
       <div class="about-text reveal">
         <p>I'm <strong>Mohamed Arsath</strong>, a final-year BCA (Data Science) student at Vels University, Chennai. I build intelligent systems that turn raw data into real-world impact.</p>
@@ -333,9 +259,7 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
         <div class="about-card-glow"></div>
         <div class="edu-badge">&#127891; Currently Enrolled</div>
         <div class="edu-school">Vels University</div>
-        <div class="edu-degree">Bachelor of Computer Applications &middot; Data Science<br>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);">Aug 2023 &ndash; May 2026</span>
-        </div>
+        <div class="edu-degree">Bachelor of Computer Applications &middot; Data Science<br><span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);">Aug 2023 &ndash; May 2026</span></div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;">Currently focused on</div>
         <div class="focus-list">
           <div class="focus-item"><div class="fdot" style="background:var(--accent)"></div>Deep Learning &amp; Computer Vision</div>
@@ -348,136 +272,56 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">02 // Skills</div>
-      <h2 class="st">My <span class="c3">Toolkit</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">02 // Skills</div><h2 class="st">My <span class="c3">Toolkit</span></h2></div>
     <div class="skills-grid">
-      <div class="skill-card sk1 reveal">
-        <div class="skill-icon">&#128013;</div>
-        <div class="skill-title">Languages</div>
-        <div class="tags">
-          <span class="tag tg">Python</span>
-          <span class="tag tg">SQL</span>
-          <span class="tag tg">R</span>
-        </div>
-      </div>
-      <div class="skill-card sk2 reveal rd1">
-        <div class="skill-icon">&#129504;</div>
-        <div class="skill-title">ML / AI</div>
-        <div class="tags">
-          <span class="tag tp">PyTorch</span>
-          <span class="tag tp">Scikit-Learn</span>
-          <span class="tag tp">YOLOv8</span>
-          <span class="tag tp">MediaPipe</span>
-          <span class="tag tp">OpenCV</span>
-        </div>
-      </div>
-      <div class="skill-card sk3 reveal rd2">
-        <div class="skill-icon">&#128202;</div>
-        <div class="skill-title">Data &amp; Analytics</div>
-        <div class="tags">
-          <span class="tag tb">Pandas</span>
-          <span class="tag tb">NumPy</span>
-          <span class="tag tb">Matplotlib</span>
-          <span class="tag tb">Power BI</span>
-          <span class="tag tb">Tableau</span>
-          <span class="tag tb">Excel</span>
-        </div>
-      </div>
-      <div class="skill-card sk4 reveal rd3">
-        <div class="skill-icon">&#128295;</div>
-        <div class="skill-title">Tools &amp; Concepts</div>
-        <div class="tags">
-          <span class="tag ty">Git</span>
-          <span class="tag ty">Jupyter</span>
-          <span class="tag ty">Streamlit</span>
-          <span class="tag ty">VS Code</span>
-          <span class="tag tm">Feature Engineering</span>
-          <span class="tag tm">Deep Learning</span>
-          <span class="tag tm">Computer Vision</span>
-        </div>
-      </div>
+      <div class="skill-card sk1 reveal"><div class="skill-icon">&#128013;</div><div class="skill-title">Languages</div><div class="tags"><span class="tag tg">Python</span><span class="tag tg">SQL</span><span class="tag tg">R</span></div></div>
+      <div class="skill-card sk2 reveal rd1"><div class="skill-icon">&#129504;</div><div class="skill-title">ML / AI</div><div class="tags"><span class="tag tp">PyTorch</span><span class="tag tp">Scikit-Learn</span><span class="tag tp">YOLOv8</span><span class="tag tp">MediaPipe</span><span class="tag tp">OpenCV</span></div></div>
+      <div class="skill-card sk3 reveal rd2"><div class="skill-icon">&#128202;</div><div class="skill-title">Data &amp; Analytics</div><div class="tags"><span class="tag tb">Pandas</span><span class="tag tb">NumPy</span><span class="tag tb">Matplotlib</span><span class="tag tb">Power BI</span><span class="tag tb">Tableau</span><span class="tag tb">Excel</span></div></div>
+      <div class="skill-card sk4 reveal rd3"><div class="skill-icon">&#128295;</div><div class="skill-title">Tools &amp; Concepts</div><div class="tags"><span class="tag ty">Git</span><span class="tag ty">Jupyter</span><span class="tag ty">Streamlit</span><span class="tag ty">VS Code</span><span class="tag tm">Feature Engineering</span><span class="tag tm">Deep Learning</span><span class="tag tm">Computer Vision</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">03 // Projects</div>
-      <h2 class="st">Things I've <span class="c2">Built</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">03 // Projects</div><h2 class="st">Things I've <span class="c2">Built</span></h2></div>
     <div class="projects-grid">
       <div class="proj-card pc1 reveal">
         <div class="proj-num">PROJECT // 01</div>
         <div class="proj-title">SignSense &middot; Sign Language Detection</div>
         <div class="proj-desc">Real-time hand gesture recognition using MediaPipe Hand Landmarker tracking 21 landmarks per hand to classify 9 ASL-inspired gestures. Deployed as a Streamlit web app with live FPS, detection log and session stats.</div>
-        <div class="proj-metrics">
-          <span class="metric m1">9 Gesture Classes</span>
-          <span class="metric m1">21 Landmarks</span>
-          <span class="metric m1">Real-Time</span>
-        </div>
-        <div class="proj-stack">
-          <span>MediaPipe</span><span>OpenCV</span><span>Python</span><span>Streamlit</span>
-        </div>
-        <div class="proj-links">
-          <a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
+        <div class="proj-metrics"><span class="metric m1">9 Gesture Classes</span><span class="metric m1">21 Landmarks</span><span class="metric m1">Real-Time</span></div>
+        <div class="proj-stack"><span>MediaPipe</span><span>OpenCV</span><span>Python</span><span>Streamlit</span></div>
+        <div class="proj-links"><a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a></div>
       </div>
       <div class="proj-card pc2 reveal rd1">
         <div class="proj-num">PROJECT // 02</div>
         <div class="proj-title">CarLens &middot; Car Colour Detection</div>
         <div class="proj-desc">YOLOv8-powered vehicle detection with real-time HSV colour classification across 13 colour classes. Processes traffic images and outputs annotated bounding boxes, per-car colour breakdown, and inference timing.</div>
-        <div class="proj-metrics">
-          <span class="metric m2">13 Colour Classes</span>
-          <span class="metric m2">YOLOv8n</span>
-          <span class="metric m2">HSV Analysis</span>
-        </div>
-        <div class="proj-stack">
-          <span>YOLOv8</span><span>OpenCV</span><span>Python</span><span>Streamlit</span>
-        </div>
-        <div class="proj-links">
-          <a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
+        <div class="proj-metrics"><span class="metric m2">13 Colour Classes</span><span class="metric m2">YOLOv8n</span><span class="metric m2">HSV Analysis</span></div>
+        <div class="proj-stack"><span>YOLOv8</span><span>OpenCV</span><span>Python</span><span>Streamlit</span></div>
+        <div class="proj-links"><a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a></div>
       </div>
       <div class="proj-card pc3 reveal rd2">
         <div class="proj-num">PROJECT // 03</div>
         <div class="proj-title">Data Jobs Dashboard &middot; Market Analysis</div>
         <div class="proj-desc">Interactive Power BI dashboard analyzing 407K+ data job postings worldwide. Features drill-through navigation, salary scatter plots, global job distribution maps, and DAX measures revealing non-obvious market trends.</div>
-        <div class="proj-metrics">
-          <span class="metric m3">407K+ Records</span>
-          <span class="metric m3">Drill-Through</span>
-          <span class="metric m3">DAX Measures</span>
-        </div>
-        <div class="proj-stack">
-          <span>Power BI</span><span>DAX</span><span>Power Query</span><span>ETL</span>
-        </div>
-        <div class="proj-links">
-          <a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
+        <div class="proj-metrics"><span class="metric m3">407K+ Records</span><span class="metric m3">Drill-Through</span><span class="metric m3">DAX Measures</span></div>
+        <div class="proj-stack"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>ETL</span></div>
+        <div class="proj-links"><a href="https://github.com/Arsathmpt" target="_blank" class="plink plink-gh">&#9881; GitHub</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">04 // Experience</div>
-      <h2 class="st">Where I've <span class="c4">Worked</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">04 // Experience</div><h2 class="st">Where I've <span class="c4">Worked</span></h2></div>
     <div class="reveal">
       <div class="exp-item">
-        <div>
-          <div class="exp-period">AUG 2025 &ndash; OCT 2025</div>
-          <div class="exp-company">NullClass</div>
-        </div>
+        <div><div class="exp-period">AUG 2025 &ndash; OCT 2025</div><div class="exp-company">NullClass</div></div>
         <div>
           <div class="exp-role">Data Science Intern</div>
           <ul class="exp-bullets">
@@ -491,85 +335,54 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
   </div>
 </section>
 
-<!-- CERTIFICATES -->
 <section id="certificates">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">05 // Certificates</div>
-      <h2 class="st">What I've <span class="c5">Earned</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">05 // Certificates</div><h2 class="st">What I've <span class="c5">Earned</span></h2></div>
     <div class="certs-grid">
       <a href="https://www.coursera.org/account/accomplishments/verify/9P6T9390DUYX" target="_blank" class="cert-card cc1 reveal">
-        <div class="cert-icon ci1">&#129302;</div>
-        <div>
-          <div class="cert-name">Machine Learning with Python</div>
-          <div class="cert-issuer it1">IBM &middot; COURSERA</div>
-        </div>
+        <div class="cert-icon ci1">&#129302;</div><div><div class="cert-name">Machine Learning with Python</div><div class="cert-issuer it1">IBM &middot; COURSERA</div></div>
       </a>
       <a href="https://www.coursera.org/account/accomplishments/verify/PC35SC6Z1H3O" target="_blank" class="cert-card cc2 reveal rd1">
-        <div class="cert-icon ci2">&#128444;</div>
-        <div>
-          <div class="cert-name">SQL for Data Science</div>
-          <div class="cert-issuer it2">UC DAVIS &middot; COURSERA</div>
-        </div>
+        <div class="cert-icon ci2">&#128444;</div><div><div class="cert-name">SQL for Data Science</div><div class="cert-issuer it2">UC DAVIS &middot; COURSERA</div></div>
       </a>
       <a href="https://www.coursera.org/account/accomplishments/verify/UVBVK6VLBRLK" target="_blank" class="cert-card cc3 reveal rd2">
-        <div class="cert-icon ci3">&#128200;</div>
-        <div>
-          <div class="cert-name">Foundations: Data, Data, Everywhere</div>
-          <div class="cert-issuer it3">GOOGLE &middot; COURSERA</div>
-        </div>
+        <div class="cert-icon ci3">&#128200;</div><div><div class="cert-name">Foundations: Data, Data, Everywhere</div><div class="cert-issuer it3">GOOGLE &middot; COURSERA</div></div>
       </a>
       <a href="https://www.nullclass.com/certificates/68d7783f97838dae5b6e694b" target="_blank" class="cert-card cc4 reveal rd3">
-        <div class="cert-icon ci4">&#127942;</div>
-        <div>
-          <div class="cert-name">Data Science Internship</div>
-          <div class="cert-issuer it4">NULLCLASS</div>
-        </div>
+        <div class="cert-icon ci4">&#127942;</div><div><div class="cert-name">Data Science Internship</div><div class="cert-issuer it4">NULLCLASS</div></div>
       </a>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">06 // Contact</div>
-      <h2 class="st">Let's <span class="c1">Connect</span></h2>
-    </div>
+    <div class="sh reveal"><div class="sey">06 // Contact</div><h2 class="st">Let's <span class="c1">Connect</span></h2></div>
     <div class="contact-wrap">
       <div class="reveal">
         <p>I'm open to internships, freelance work, and entry-level roles in Data Science and ML. If you have an interesting opportunity, let's talk.</p>
         <div class="contact-links">
-          <a href="mailto:arsath.techdata@gmail.com" class="clink cl1">
-            <span>&#128231;</span> arsath.techdata@gmail.com
-          </a>
-          <a href="tel:+917845117336" class="clink cl2">
-            <span>&#128241;</span> +91 78451 17336
-          </a>
-          <a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" class="clink cl3">
-            <span>&#128188;</span> linkedin.com/in/mohamed-arsath-0462a9354
-          </a>
-          <a href="https://github.com/Arsathmpt" target="_blank" class="clink cl4">
-            <span>&#128025;</span> github.com/Arsathmpt
-          </a>
+          <a href="/cdn-cgi/l/email-protection#5736252436233f792332343f3336233617303a363e3b7934383a" class="clink cl1"><span>&#128231;</span> <span class="__cf_email__" data-cfemail="b5d4c7c6d4c1dd9bc1d0d6ddd1d4c1d4f5d2d8d4dcd99bd6dad8">[email&#160;protected]</span></a>
+          <a href="tel:+917845117336" class="clink cl2"><span>&#128241;</span> +91 78451 17336</a>
+          <a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" class="clink cl3"><span>&#128188;</span> linkedin.com/in/mohamed-arsath-0462a9354</a>
+          <a href="https://github.com/Arsathmpt" target="_blank" class="clink cl4"><span>&#128025;</span> github.com/Arsathmpt</a>
         </div>
       </div>
       <div class="contact-form reveal rd1">
         <div class="form-group">
           <label>Your Name</label>
-          <input type="text" placeholder="John Doe"/>
+          <input type="text" id="from_name" placeholder="John Doe"/>
         </div>
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" placeholder="john@company.com"/>
+          <input type="email" id="reply_to" placeholder="john@company.com"/>
         </div>
         <div class="form-group">
           <label>Message</label>
-          <textarea placeholder="I'd like to discuss an opportunity..."></textarea>
+          <textarea id="message" placeholder="I'd like to discuss an opportunity..."></textarea>
         </div>
-        <button class="form-btn" onclick="alert('Thanks! Mohamed will get back to you soon.')">Send Message &rarr;</button>
+        <button class="form-btn" id="sendBtn" onclick="sendEmail()">Send Message &rarr;</button>
+        <div class="form-status" id="form-status"></div>
       </div>
     </div>
   </div>
@@ -580,7 +393,7 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
   <div class="fr">BUILT WITH &hearts; &middot; <a href="https://github.com/Arsathmpt" target="_blank">GITHUB</a> &middot; CHENNAI, INDIA</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Cursor
 const cur=document.getElementById('cursor'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
@@ -599,10 +412,10 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const secs=document.querySelectorAll('section[id]');
 const navAs=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{
-  let cur='';
-  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-220)cur=s.id;});
+  let active='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-220)active=s.id;});
   navAs.forEach(a=>{
-    const on=a.getAttribute('href')==='#'+cur;
+    const on=a.getAttribute('href')==='#'+active;
     a.style.color=on?'var(--accent)':'';
     if(on)a.classList.add('active'); else a.classList.remove('active');
   });
@@ -610,19 +423,70 @@ window.addEventListener('scroll',()=>{
 
 // Typing effect
 const words=['Data Scientist','ML Engineer','CV Developer','Problem Solver'];
-let wi=0,ci=0,del=false;
+let wi=0,ci=0,isDeleting=false;
 const tgt=document.querySelector('.hero-tagline strong');
 if(tgt){
   tgt.textContent='';
   const tc=document.createElement('span');tc.className='tcursor';tgt.after(tc);
   function type(){
     const w=words[wi];
-    if(!del){tgt.textContent=w.substring(0,ci+1);ci++;if(ci===w.length){del=true;setTimeout(type,1800);return;}}
-    else{tgt.textContent=w.substring(0,ci-1);ci--;if(ci===0){del=false;wi=(wi+1)%words.length;}}
-    setTimeout(type,del?60:90);
+    if(!isDeleting){tgt.textContent=w.substring(0,ci+1);ci++;if(ci===w.length){isDeleting=true;setTimeout(type,1800);return;}}
+    else{tgt.textContent=w.substring(0,ci-1);ci--;if(ci===0){isDeleting=false;wi=(wi+1)%words.length;}}
+    setTimeout(type,isDeleting?60:90);
   }
   setTimeout(type,1000);
 }
-</script>
-</body>
-</html>
+
+// ── EmailJS Contact Form ──────────────────────────────────────────────────────
+// SETUP (3 minutes, free):
+// 1. Sign up at https://www.emailjs.com
+// 2. Add Email Service → connect Gmail → copy Service ID
+// 3. Create Email Template using variables: {{from_name}} {{reply_to}} {{message}}
+//    Copy the Template ID
+// 4. Account → API Keys → copy your Public Key
+// 5. Replace the 3 values below and push to GitHub
+
+const EJS_KEY      = '6VL228pkWok1HPidx';
+const EJS_SERVICE  = 'service_tfe5yhl';
+const EJS_TEMPLATE = 'mqo47ek';
+
+(function(){emailjs.init({publicKey: EJS_KEY});})();
+
+function sendEmail(){
+  const name    = document.getElementById('from_name').value.trim();
+  const email   = document.getElementById('reply_to').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const btn     = document.getElementById('sendBtn');
+  const status  = document.getElementById('form-status');
+
+  // Validation
+  if(!name || !email || !message){
+    status.className='form-status error';
+    status.textContent='Please fill in all fields.';
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.className='form-status error';
+    status.textContent='Please enter a valid email address.';
+    return;
+  }
+
+  // Loading state
+  btn.textContent='Sending\u2026';
+  btn.style.opacity='.65';
+  btn.style.pointerEvents='none';
+  status.className='form-status';
+
+  emailjs.send(EJS_SERVICE, EJS_TEMPLATE, {from_name:name, reply_to:email, message:message})
+  .then(()=>{
+    btn.textContent='\u2713 Sent!';
+    btn.style.background='linear-gradient(135deg,#00FFB2,#00cc8f)';
+    btn.style.opacity='1';
+    status.className='form-status success';
+    status.textContent='\u2713 Your message is on its way to Mohamed!';
+    document.getElementById('from_name').value='';
+    document.getElementById('reply_to').value='';
+    document.getElementById('message').value='';
+    setTimeout(()=>{btn.textContent='Send Message \u2192';btn.style.background='';btn.style.pointerEvents='auto';},4000);
+  }, err=>{
+    btn.textContent='Se
