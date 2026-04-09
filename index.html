@@ -140,12 +140,12 @@ section{position:relative;z-index:1;}
 .exp-role{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.03em;margin-bottom:1.2rem;}
 .exp-bullets{list-style:none;}
 .exp-bullets li{font-size:.9rem;color:var(--muted);line-height:1.75;padding-left:1.4rem;position:relative;margin-bottom:.6rem;}
-.exp-bullets li::before{content:'&#9658;';position:absolute;left:0;color:var(--accent);}
+.exp-bullets li::before{content:'\25B6';position:absolute;left:0;color:var(--accent);}
 .exp-bullets li strong{color:var(--text);}
 #certificates{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);}
 .certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
 .cert-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.6rem;display:flex;align-items:flex-start;gap:1rem;text-decoration:none;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
-.cert-card::after{content:'&#8599;';position:absolute;top:1rem;right:1rem;font-size:.85rem;color:var(--muted);transition:color .2s,transform .2s;}
+.cert-card::after{content:'\2197';position:absolute;top:1rem;right:1rem;font-size:.85rem;color:var(--muted);transition:color .2s,transform .2s;}
 .cert-card:hover{transform:translateY(-5px);}
 .cc1:hover{border-color:var(--blue);box-shadow:0 12px 40px rgba(77,159,255,.12);}
 .cc1:hover::after{color:var(--blue);transform:translate(2px,-2px);}
@@ -234,7 +234,7 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">View My Work &rarr;</a>
       <a href="https://github.com/Arsathmpt" target="_blank" class="btn-outline">&#9881; GitHub</a>
-      <a href="/cdn-cgi/l/email-protection#0d6c7f7e6c79652379686e65696c796c4d6a606c6461236e6260" class="btn-outline">&#9993; Hire Me</a>
+      <a href="mailto:arsath.techdata@gmail.com" class="btn-outline">&#9993; Hire Me</a>
     </div>
   </div>
   <div class="hero-badges">
@@ -362,7 +362,7 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
       <div class="reveal">
         <p>I'm open to internships, freelance work, and entry-level roles in Data Science and ML. If you have an interesting opportunity, let's talk.</p>
         <div class="contact-links">
-          <a href="/cdn-cgi/l/email-protection#5736252436233f792332343f3336233617303a363e3b7934383a" class="clink cl1"><span>&#128231;</span> <span class="__cf_email__" data-cfemail="b5d4c7c6d4c1dd9bc1d0d6ddd1d4c1d4f5d2d8d4dcd99bd6dad8">[email&#160;protected]</span></a>
+          <a href="mailto:arsath.techdata@gmail.com" class="clink cl1"><span>&#128231;</span> arsath.techdata@gmail.com</a>
           <a href="tel:+917845117336" class="clink cl2"><span>&#128241;</span> +91 78451 17336</a>
           <a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" class="clink cl3"><span>&#128188;</span> linkedin.com/in/mohamed-arsath-0462a9354</a>
           <a href="https://github.com/Arsathmpt" target="_blank" class="clink cl4"><span>&#128025;</span> github.com/Arsathmpt</a>
@@ -393,7 +393,7 @@ footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify
   <div class="fr">BUILT WITH &hearts; &middot; <a href="https://github.com/Arsathmpt" target="_blank">GITHUB</a> &middot; CHENNAI, INDIA</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Cursor
 const cur=document.getElementById('cursor'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
@@ -437,15 +437,7 @@ if(tgt){
   setTimeout(type,1000);
 }
 
-// ── EmailJS Contact Form ──────────────────────────────────────────────────────
-// SETUP (3 minutes, free):
-// 1. Sign up at https://www.emailjs.com
-// 2. Add Email Service → connect Gmail → copy Service ID
-// 3. Create Email Template using variables: {{from_name}} {{reply_to}} {{message}}
-//    Copy the Template ID
-// 4. Account → API Keys → copy your Public Key
-// 5. Replace the 3 values below and push to GitHub
-
+// EmailJS Contact Form
 const EJS_KEY      = '6VL228pkWok1HPidx';
 const EJS_SERVICE  = 'service_tfe5yhl';
 const EJS_TEMPLATE = 'mqo47ek';
@@ -459,7 +451,6 @@ function sendEmail(){
   const btn     = document.getElementById('sendBtn');
   const status  = document.getElementById('form-status');
 
-  // Validation
   if(!name || !email || !message){
     status.className='form-status error';
     status.textContent='Please fill in all fields.';
@@ -471,8 +462,7 @@ function sendEmail(){
     return;
   }
 
-  // Loading state
-  btn.textContent='Sending\u2026';
+  btn.textContent='Sending...';
   btn.style.opacity='.65';
   btn.style.pointerEvents='none';
   status.className='form-status';
@@ -489,4 +479,14 @@ function sendEmail(){
     document.getElementById('message').value='';
     setTimeout(()=>{btn.textContent='Send Message \u2192';btn.style.background='';btn.style.pointerEvents='auto';},4000);
   }, err=>{
-    btn.textContent='Se
+    btn.textContent='Send Message \u2192';
+    btn.style.opacity='1';
+    btn.style.pointerEvents='auto';
+    status.className='form-status error';
+    status.textContent='Oops! Something went wrong. Please try emailing me directly.';
+    console.error('EmailJS Error:', err);
+  });
+}
+</script>
+</body>
+</html>
