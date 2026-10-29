@@ -1,450 +1,2527 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mohamed Arsath · Data Science Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#05050F;--surface:#0C0C1E;--surface2:#12122A;
-  --border:#1E1E3E;--border2:#2A2A50;
-  --accent:#00FFB2;--pink:#FF4D8D;--blue:#4D9FFF;
-  --purple:#A855F7;--yellow:#FFD166;--orange:#FF8C42;
-  --text:#F0F0FF;--muted:#6060A0;
-}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;}
-.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(140px);opacity:.07;}
-.orb1{width:600px;height:600px;background:var(--purple);top:-200px;left:-150px;}
-.orb2{width:500px;height:500px;background:var(--pink);top:30%;right:-150px;}
-.orb3{width:400px;height:400px;background:var(--blue);bottom:-100px;left:30%;}
-.orb4{width:300px;height:300px;background:var(--accent);top:60%;left:-100px;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,178,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,178,.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:rgba(5,5,15,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);letter-spacing:.2em;}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:4px;}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
-.nav-links a:hover,.nav-links a.active{color:var(--accent);}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:flex-start;padding:0 4rem;position:relative;z-index:1;overflow:hidden;}
-.hero-content{max-width:700px; text-align:left;}
-.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeUp .8s .2s forwards;}
-.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--accent);}
-.hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,10vw,9rem);line-height:.92;letter-spacing:.02em;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .4s forwards;}
-.hero-name .stroke{-webkit-text-stroke:2px rgba(168,85,247,.5);color:transparent;}
-.hero-name .dot{background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-tagline{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .6s forwards;}
-.hero-tagline strong{color:var(--text);}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards;}
-.btn-primary{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--accent),var(--blue));color:#05050F;padding:.9rem 2.2rem;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;text-decoration:none;letter-spacing:.03em;transition:transform .2s,box-shadow .2s;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,255,178,.3);}
-.btn-outline{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--border2);color:var(--text);padding:.9rem 2rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-decoration:none;letter-spacing:.1em;transition:border-color .2s,color .2s,box-shadow .2s;}
-.btn-outline:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 20px rgba(168,85,247,.15);}
-.hero-badges{position:absolute;right:4rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1rem;opacity:0;animation:fadeLeft .8s 1s forwards;}
-.hbadge{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:1.1rem 1.4rem;display:flex;align-items:center;gap:.9rem;transition:border-color .3s;}
-.hbadge:hover{border-color:var(--accent);}
-.hbadge-icon{font-size:1.6rem;}
-.hbadge-num{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);line-height:1;}
-.hbadge-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
-.scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp .8s 1.4s forwards; z-index:10;}
-.scroll-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:sdrop 1.5s ease-in-out infinite;}
-@keyframes sdrop{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
-.scroll-text{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;}
-section{position:relative;z-index:1;}
-.sw{padding:7rem 4rem;}
-.sh{margin-bottom:4rem;}
-.sey{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.8rem;}
-.sey::before{content:'';width:30px;height:1px;background:var(--accent);}
-.st{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.05;letter-spacing:.02em;}
-.c1{color:var(--accent);}.c2{color:var(--pink);}.c3{color:var(--blue);}.c4{color:var(--purple);}.c5{color:var(--yellow);}
-#about{background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%);}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.about-text p{color:var(--muted);line-height:1.85;margin-bottom:1.2rem;font-size:.97rem;}
-.about-text p strong{color:var(--text);}
-.hl{background:linear-gradient(135deg,rgba(0,255,178,.12),rgba(77,159,255,.12));border:1px solid rgba(0,255,178,.2);border-radius:4px;padding:.1rem .5rem;color:var(--accent);}
-.about-card{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;}
-.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--blue),var(--purple));}
-.about-card-glow{position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(168,85,247,.08),transparent 70%);bottom:-50px;right:-50px;pointer-events:none;}
-.edu-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,255,178,.08);border:1px solid rgba(0,255,178,.2);border-radius:6px;padding:.4rem .9rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:1.2rem;}
-.edu-school{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:.3rem;}
-.edu-degree{font-size:.85rem;color:var(--muted);margin-bottom:1.8rem;}
-.focus-list{display:flex;flex-direction:column;gap:.6rem;}
-.focus-item{display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--muted);padding:.65rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;}
-.focus-item:hover{border-color:var(--accent);color:var(--text);}
-.fdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-#skills{background:var(--surface);}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;}
-.skill-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
-.skill-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
-.skill-card:hover{transform:translateY(-6px);}
-.sk1:hover{border-color:var(--accent);box-shadow:0 12px 40px rgba(0,255,178,.1);}
-.sk1::before{background:radial-gradient(circle at top left,rgba(0,255,178,.06),transparent 60%);}
-.sk2:hover{border-color:var(--pink);box-shadow:0 12px 40px rgba(255,77,141,.1);}
-.sk2::before{background:radial-gradient(circle at top left,rgba(255,77,141,.06),transparent 60%);}
-.sk3:hover{border-color:var(--blue);box-shadow:0 12px 40px rgba(77,159,255,.1);}
-.sk3::before{background:radial-gradient(circle at top left,rgba(77,159,255,.06),transparent 60%);}
-.sk4:hover{border-color:var(--yellow);box-shadow:0 12px 40px rgba(255,209,102,.1);}
-.sk4::before{background:radial-gradient(circle at top left,rgba(255,209,102,.06),transparent 60%);}
-.skill-card:hover::before{opacity:1;}
-.skill-icon{font-size:2rem;margin-bottom:.8rem;}
-.skill-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:1rem;}
-.tags{display:flex;flex-wrap:wrap;gap:.5rem;}
-.tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.28rem .72rem;border-radius:4px;letter-spacing:.05em;border:1px solid;}
-.tg{color:var(--accent);border-color:rgba(0,255,178,.25);background:rgba(0,255,178,.06);}
-.tp{color:var(--pink);border-color:rgba(255,77,141,.25);background:rgba(255,77,141,.06);}
-.tb{color:var(--blue);border-color:rgba(77,159,255,.25);background:rgba(77,159,255,.06);}
-.ty{color:var(--yellow);border-color:rgba(255,209,102,.25);background:rgba(255,209,102,.06);}
-.tm{color:var(--muted);border-color:var(--border);background:var(--surface);}
-#projects{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;}
-.proj-card{background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:2rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;}
-.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.pc1::before{background:linear-gradient(90deg,var(--accent),var(--blue));}
-.pc2::before{background:linear-gradient(90deg,var(--orange),var(--yellow));}
-.pc3::before{background:linear-gradient(90deg,var(--purple),var(--pink));}
-.proj-card:hover{transform:translateY(-8px);}
-.pc1:hover{border-color:var(--accent);box-shadow:0 20px 60px rgba(0,255,178,.1);}
-.pc2:hover{border-color:var(--orange);box-shadow:0 20px 60px rgba(255,140,66,.1);}
-.pc3:hover{border-color:var(--purple);box-shadow:0 20px 60px rgba(168,85,247,.1);}
-.proj-card:hover::before{transform:scaleX(1);}
-.proj-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.2em;margin-bottom:1rem;}
-.proj-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.03em;margin-bottom:.8rem;line-height:1.1;}
-.proj-desc{font-size:.87rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;flex:1;}
-.proj-metrics{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem;}
-.metric{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.25rem .7rem;border-radius:4px;border:1px solid;}
-.m1{color:var(--accent);border-color:rgba(0,255,178,.2);background:rgba(0,255,178,.06);}
-.m2{color:var(--orange);border-color:rgba(255,140,66,.2);background:rgba(255,140,66,.06);}
-.m3{color:var(--purple);border-color:rgba(168,85,247,.2);background:rgba(168,85,247,.06);}
-.proj-stack{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.4rem;}
-.proj-stack span{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:.2rem .6rem;border-radius:3px;background:var(--surface);border:1px solid var(--border);color:var(--muted);}
-.proj-links{display:flex;gap:.7rem;margin-top:auto;}
-.plink{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;text-decoration:none;padding:.45rem 1rem;border-radius:6px;border:1px solid;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;}
-.plink-gh{color:var(--text);border-color:var(--border2);}
-.plink-gh:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,255,178,.05);}
-#experience{background:var(--surface);}
-.exp-item{display:grid;grid-template-columns:220px 1fr;gap:3rem;padding:3rem 0;border-bottom:1px solid var(--border);}
-.exp-item:last-child{border-bottom:none;}
-.exp-period{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.4rem;}
-.exp-company{font-size:.85rem;color:var(--muted);}
-.exp-role{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.03em;margin-bottom:1.2rem;}
-.exp-bullets{list-style:none;}
-.exp-bullets li{font-size:.9rem;color:var(--muted);line-height:1.75;padding-left:1.4rem;position:relative;margin-bottom:.6rem;}
-.exp-bullets li::before{content:'\25B6';position:absolute;left:0;color:var(--accent);}
-.exp-bullets li strong{color:var(--text);}
-#certificates{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);}
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
-.cert-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:1.6rem;display:flex;align-items:flex-start;gap:1rem;text-decoration:none;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;}
-.cert-card::after{content:'\2197';position:absolute;top:1rem;right:1rem;font-size:.85rem;color:var(--muted);transition:color .2s,transform .2s;}
-.cert-card:hover{transform:translateY(-5px);}
-.cc1:hover{border-color:var(--blue);box-shadow:0 12px 40px rgba(77,159,255,.12);}
-.cc1:hover::after{color:var(--blue);transform:translate(2px,-2px);}
-.cc2:hover{border-color:var(--orange);box-shadow:0 12px 40px rgba(255,140,66,.12);}
-.cc2:hover::after{color:var(--orange);transform:translate(2px,-2px);}
-.cc3:hover{border-color:var(--accent);box-shadow:0 12px 40px rgba(0,255,178,.12);}
-.cc3:hover::after{color:var(--accent);transform:translate(2px,-2px);}
-.cc4:hover{border-color:var(--purple);box-shadow:0 12px 40px rgba(168,85,247,.12);}
-.cc4:hover::after{color:var(--purple);transform:translate(2px,-2px);}
-.cert-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;border:1px solid;}
-.ci1{background:rgba(77,159,255,.1);border-color:rgba(77,159,255,.2);}
-.ci2{background:rgba(255,140,66,.1);border-color:rgba(255,140,66,.2);}
-.ci3{background:rgba(0,255,178,.1);border-color:rgba(0,255,178,.2);}
-.ci4{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.2);}
-.cert-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:.95rem;color:var(--text);margin-bottom:.25rem;line-height:1.3;}
-.cert-issuer{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;}
-.it1{color:var(--blue);}.it2{color:var(--orange);}.it3{color:var(--accent);}.it4{color:var(--purple);}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohamed Arsath M. — Data Analytics, Operations & Applied ML Portfolio</title>
+  <meta name="description" content="Portfolio of Mohamed Arsath M., a BCA Data Science graduate in Chennai specializing in Data Analytics, Data Operations, SQL, Power BI, and applied Python models." />
+  
+  <!-- Open Graph / Social Sharing Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mohamed Arsath M. — Data Analytics, Operations & Applied ML" />
+  <meta property="og:description" content="Explore verified case studies in Power BI (400K+ records analyzed), NLP resume parsing, and OpenCV/YOLOv8 computer vision pipelines (98% accuracy across 1,000+ images)." />
+  <meta property="og:url" content="https://arsathmpt.github.io/portfolio/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mohamed Arsath M. — Data Analytics & Operations Portfolio" />
+  <meta name="twitter:description" content="BCA Data Science graduate from Vels University building clean data pipelines, Power BI dashboards, and applied ML tools." />
 
-#resume{background:var(--bg);}
-.resume-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
-.resume-viewer{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface2);}
-.resume-viewer iframe{width:100%;height:780px;border:none;display:block;}
-.btn-download{display:inline-flex;align-items:center;gap:.6rem;background:transparent;border:1px solid var(--border2);color:var(--text);padding:.8rem 1.8rem;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.9rem;text-decoration:none;transition:border-color .2s,color .2s,background .2s;}
-.btn-download:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,255,178,.05);}
+  <!-- Fonts: Cormorant Garamond (Editorial Serif), Plus Jakarta Sans (Clean Humanist Body), JetBrains Mono (Technical Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-#contact{background:var(--bg);}
-.contact-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:600px;margin:0 auto;}
-.contact-links{display:flex;flex-direction:column;gap:.8rem;width:100%;align-items:center;}
-.clink{display:flex;align-items:center;justify-content:center;gap:1rem;text-decoration:none;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color .2s,transform .2s,box-shadow .2s;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted);letter-spacing:.06em;width:100%;max-width:400px;}
-.clink:hover{transform:translateY(-4px);}
-.cl1:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 4px 20px rgba(77,159,255,.1);}
-.cl2:hover{border-color:var(--pink);color:var(--pink);}
-.cl3:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 20px rgba(0,255,178,.1);}
-.cl4:hover{border-color:var(--purple);color:var(--purple);}
-footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface);}
-.fl,.fr{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.1em;}
-.fr a{color:var(--accent);text-decoration:none;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeLeft{from{opacity:0;transform:translateX(28px);}to{opacity:1;transform:translateX(0);}}
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
-.tcursor{display:inline-block;width:3px;height:.85em;background:var(--accent);margin-left:3px;animation:blink .8s step-end infinite;vertical-align:middle;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS — PAGANI-INSPIRED BESPOKE CARBON & TITANIUM PALETTE
+       Restrained dark carbon, warm Carrara alabaster, and one muted bronze accent
+       ========================================================================== */
+    :root {
+      --bg-carbon: #0B0C0E;
+      --bg-atelier: #111317;
+      --bg-panel: #16191F;
+      --bg-elevated: #1C2027;
+      
+      --text-primary: #F4F1EA;    /* High-contrast warm alabaster (16.4:1 contrast) */
+      --text-secondary: #B8B4AA;  /* Muted silver-stone (9.3:1 contrast) */
+      --text-muted: #8E8A80;      /* Technical specification grey (5.5:1 contrast - AA compliant) */
+      
+      --accent-bronze: #C5A059;   /* Single warm horological brass/bronze accent */
+      --accent-bronze-Soft: rgba(197, 160, 89, 0.14);
+      --accent-bronze-Border: rgba(197, 160, 89, 0.42);
+      
+      --hairline: #232730;
+      --hairline-strong: #323744;
+      
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --ease-atelier: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --header-height: 76px;
+      --container-max: 1280px;
+    }
 
-@media(max-width:900px){
-  .resume-viewer iframe{height:500px;}
-  .resume-header{flex-direction:column;align-items:flex-start;}
-  nav { padding: 1.2rem 1.5rem; flex-direction: column; gap: 1rem; }
-  .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
-  #hero { padding: 8rem 1.5rem 3rem; flex-direction: column; align-items: flex-start; text-align: left; }
-  .hero-badges { position: static; transform: none; margin-top: 3rem; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
-  .scroll-hint { position: relative; bottom: 0; left: 0; transform: none; margin-top: 3rem; align-items: flex-start; }
-  .sw { padding: 4rem 1.5rem; }
-  .about-grid, .contact-wrap { grid-template-columns: 1fr; }
-  .exp-item { grid-template-columns: 1fr; gap: .5rem; }
-  footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
-}
-</style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-height) + 24px);
+      background-color: var(--bg-carbon);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      position: relative;
+      background-color: var(--bg-carbon);
+    }
+
+    /* Subtle ambient background glow & architectural drafting lines */
+    .ambient-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background: 
+        radial-gradient(circle at 78% 18%, rgba(197, 160, 89, 0.055), transparent 45%),
+        radial-gradient(circle at 15% 82%, rgba(184, 180, 170, 0.035), transparent 50%);
+    }
+
+    .ambient-ring {
+      position: absolute;
+      top: -18vh;
+      right: -12vw;
+      width: 68vw;
+      height: 68vw;
+      max-width: 860px;
+      max-height: 860px;
+      border-radius: 50%;
+      border: 1px solid rgba(197, 160, 89, 0.07);
+      animation: slowOrbit 48s linear infinite;
+    }
+
+    .ambient-ring::before {
+      content: '';
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      border: 1px dashed rgba(244, 241, 234, 0.04);
+    }
+
+    @keyframes slowOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==========================================================================
+       2. ACCESSIBILITY & SKIP LINK
+       ========================================================================== */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 1.5rem;
+      z-index: 9999;
+      background: var(--accent-bronze);
+      color: var(--bg-carbon);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: top 0.25s var(--ease-atelier);
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+      outline: 2px solid var(--text-primary);
+      outline-offset: 2px;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-bronze);
+      outline-offset: 4px;
+    }
+
+    /* Top Scroll Telemetry Progress Bar */
+    .scroll-telemetry {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.04);
+      z-index: 1001;
+    }
+
+    .scroll-telemetry-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-bronze);
+      transition: width 0.08s linear;
+    }
+
+    /* ==========================================================================
+       3. HEADER & COMPACT MOBILE NAVIGATION
+       ========================================================================== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      z-index: 1000;
+      background: rgba(11, 12, 14, 0.86);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .header-inner {
+      max-width: var(--container-max);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-monogram {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--accent-bronze);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0;
+      position: relative;
+      transition: color 0.3s var(--ease-atelier);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent-bronze);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s var(--ease-atelier);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-link.active {
+      color: var(--accent-bronze);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--hairline-strong);
+      color: var(--text-primary);
+      padding: 0.55rem 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .menu-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 16px;
+    }
+
+    .menu-bars span {
+      display: block;
+      height: 1.5px;
+      width: 100%;
+      background: var(--accent-bronze);
+      transition: transform 0.3s var(--ease-atelier), opacity 0.3s;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(1) {
+      transform: translateY(5.5px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(3) {
+      transform: translateY(-5.5px) rotate(-45deg);
+    }
+
+    /* ==========================================================================
+       4. LAYOUT & ARCHITECTURAL DIVIDERS
+       ========================================================================== */
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    .section-block {
+      padding: 7.5rem 0;
+      position: relative;
+    }
+
+    /* Animated drafting hairline that draws across on scroll */
+    .draft-line {
+      height: 1px;
+      width: 100%;
+      background: var(--hairline);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .draft-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent-bronze), rgba(197, 160, 89, 0.15), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.3s var(--ease-atelier);
+    }
+
+    .draft-line.drawn::after {
+      transform: scaleX(1);
+    }
+
+    .section-index-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .act-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-bronze);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .act-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--accent-bronze);
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .section-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-bronze);
+    }
+
+    .section-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ==========================================================================
+       5. HERO SECTION — PAGANI ATELIER OPENING & VERIFIED TELEMETRY LEDGER
+       ========================================================================== */
+    #hero {
+      min-height: 100vh;
+      padding: calc(var(--header-height) + 4.5rem) 0 5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-architecture {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 4.5rem;
+      align-items: end;
+    }
+
+    .hero-meta-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+    }
+
+    .status-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-bronze);
+      box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.4rem, 7vw, 6.2rem);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-title .italic-serif {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-bronze);
+    }
+
+    /* Masked line reveal for editorial entrance */
+    .mask-line {
+      display: block;
+      overflow: hidden;
+      padding-bottom: 0.08em;
+    }
+
+    .mask-line > span {
+      display: block;
+      transform: translateY(0);
+      transition: transform 1s var(--ease-atelier), opacity 1s var(--ease-atelier);
+    }
+
+    .js-anim .mask-line > span {
+      transform: translateY(105%);
+      opacity: 0;
+    }
+
+    .js-anim .hero-ready .mask-line > span {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .js-anim .hero-ready .mask-line:nth-child(2) > span {
+      transition-delay: 0.12s;
+    }
+
+    .js-anim .hero-ready .mask-line:nth-child(3) > span {
+      transition-delay: 0.24s;
+    }
+
+    .hero-lead {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 610px;
+      line-height: 1.75;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-lead strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .role-targets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .role-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 0.4rem 0.85rem;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      color: var(--text-primary);
+    }
+
+    .role-pill.highlight {
+      border-color: var(--accent-bronze-Border);
+      background: var(--accent-bronze-Soft);
+      color: var(--accent-bronze);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-atelier {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: transform 0.3s var(--ease-atelier), background-color 0.3s, border-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-primary-bronze {
+      background: var(--accent-bronze);
+      color: var(--bg-carbon);
+      border: 1px solid var(--accent-bronze);
+      font-weight: 600;
+    }
+
+    .btn-primary-bronze:hover {
+      background: #d4b26c;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary-carbon {
+      background: var(--bg-atelier);
+      color: var(--text-primary);
+      border: 1px solid var(--hairline-strong);
+    }
+
+    .btn-secondary-carbon:hover {
+      border-color: var(--accent-bronze);
+      color: var(--accent-bronze);
+      transform: translateY(-2px);
+    }
+
+    .btn-atelier svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.3s var(--ease-atelier);
+    }
+
+    .btn-atelier:hover svg {
+      transform: translate(2px, -2px);
+    }
+
+    /* Right Column: Verified Specification & Telemetry Ledger */
+    .telemetry-ledger {
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .telemetry-ledger::before {
+      content: 'VERIFIED SPECIFICATION LEDGER // CHENNAI, IN';
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .spec-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .spec-row {
+      display: block;
+      text-decoration: none;
+      padding: 1rem 1.15rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--hairline);
+      transition: border-color 0.3s var(--ease-atelier), transform 0.3s var(--ease-atelier);
+    }
+
+    .spec-row:hover {
+      border-color: var(--accent-bronze);
+      transform: translateX(4px);
+    }
+
+    .spec-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.3rem;
+    }
+
+    .spec-figure {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--accent-bronze);
+      line-height: 1;
+    }
+
+    .spec-tag {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .spec-context {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       6. ACT I: PHILOSOPHY & CREDENTIALS (ASYMMETRIC EDITORIAL SPLIT)
+       ========================================================================== */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .editorial-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 2.5vw, 2.15rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--text-primary);
+      margin-bottom: 1.75rem;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--accent-bronze);
+    }
+
+    .about-prose p {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      margin-bottom: 1.35rem;
+      line-height: 1.8;
+    }
+
+    .about-prose strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .dossier-panel {
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 2.25rem;
+    }
+
+    .dossier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .dossier-title {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-bronze);
+    }
+
+    .dossier-status {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.2rem 0.6rem;
+      background: var(--accent-bronze-Soft);
+      color: var(--accent-bronze);
+      border: 1px solid var(--accent-bronze-Border);
+    }
+
+    .dossier-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .dossier-item dt {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .dossier-item dd {
+      font-size: 0.96rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .dossier-item dd span {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-top: 0.15rem;
+    }
+
+    /* ==========================================================================
+       7. ACT II: BESPOKE CASE STUDIES (INTERACTIVE TELEMETRY & PROOF)
+       ========================================================================== */
+    .case-study-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4.5rem;
+    }
+
+    .case-study {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 3.5rem;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 3rem;
+      align-items: center;
+      transition: border-color 0.4s var(--ease-atelier);
+    }
+
+    .case-study:hover {
+      border-color: var(--accent-bronze-Border);
+    }
+
+    .case-study.reverse {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .case-study.reverse .case-visual {
+      order: -1;
+    }
+
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .case-breakdown {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: 1.25rem 0;
+    }
+
+    .breakdown-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1rem;
+      font-size: 0.92rem;
+    }
+
+    .breakdown-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding-top: 0.2rem;
+    }
+
+    .breakdown-text {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .breakdown-text strong {
+      color: var(--text-primary);
+    }
+
+    /* Explained Metrics Bar */
+    .verified-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .v-metric {
+      background: var(--bg-panel);
+      border: 1px solid var(--hairline);
+      padding: 0.75rem 0.9rem;
+    }
+
+    .v-metric-val {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--accent-bronze);
+      display: block;
+    }
+
+    .v-metric-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin-top: 0.2rem;
+      display: block;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .tech-tags span {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      background: var(--bg-carbon);
+      border: 1px solid var(--hairline);
+      color: var(--text-secondary);
+    }
+
+    .case-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    /* Project Interactive Telemetry Visual Container */
+    .case-visual {
+      background: var(--bg-carbon);
+      border: 1px solid var(--hairline-strong);
+      padding: 1.5rem;
+      position: relative;
+      transition: transform 0.35s var(--ease-out-quart);
+    }
+
+    .visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--hairline);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .visual-controls {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      background: var(--bg-panel);
+      border: 1px solid var(--hairline-strong);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip.active,
+    .filter-chip:hover {
+      border-color: var(--accent-bronze);
+      color: var(--accent-bronze);
+      background: var(--accent-bronze-Soft);
+    }
+
+    .schematic-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .visual-caption {
+      margin-top: 0.9rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--hairline);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* SVG scanline animation for CarLens */
+    .scan-beam {
+      animation: scanSweep 4.5s ease-in-out infinite;
+    }
+
+    @keyframes scanSweep {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(115px); }
+    }
+
+    /* ==========================================================================
+       8. ACT III: TECHNICAL SPECIFICATION MATRIX (TABULAR LEDGER, NOT CARDS)
+       ========================================================================== */
+    .spec-table-wrap {
+      border-top: 1px solid var(--hairline-strong);
+    }
+
+    .spec-matrix-row {
+      display: grid;
+      grid-template-columns: 260px 1fr 280px;
+      gap: 2.5rem;
+      padding: 2.25rem 0;
+      border-bottom: 1px solid var(--hairline);
+      align-items: start;
+      transition: background-color 0.3s;
+    }
+
+    .spec-matrix-row:hover {
+      background-color: rgba(255, 255, 255, 0.015);
+    }
+
+    .matrix-domain {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .matrix-domain span {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .matrix-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .matrix-tool {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      padding: 0.38rem 0.85rem;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      color: var(--text-primary);
+    }
+
+    .matrix-application {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       9. ACT IV: EXPERIENCE & VERIFIED CERTIFICATES
+       ========================================================================== */
+    .exp-cert-split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+      align-items: start;
+    }
+
+    .timeline-card {
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .timeline-period {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-org {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .timeline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .timeline-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .timeline-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent-bronze);
+      font-family: var(--font-mono);
+    }
+
+    .timeline-list strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .cert-ledger {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .cert-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline);
+      text-decoration: none;
+      transition: border-color 0.3s var(--ease-atelier), transform 0.3s var(--ease-atelier);
+    }
+
+    .cert-row:hover {
+      border-color: var(--accent-bronze);
+      transform: translateX(4px);
+    }
+
+    .cert-info h3 {
+      font-family: var(--font-sans);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-issuer {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .cert-summary {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 0.35rem;
+      display: block;
+    }
+
+    .cert-verify {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* ==========================================================================
+       10. ACT V: RESUME DOSSIER (LIVE WEB SHEET + EMBEDDED PDF VIEWER)
+       ========================================================================== */
+    .resume-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 1.75rem 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resume-bar-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .resume-bar-text p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .resume-frame-container {
+      border: 1px solid var(--hairline-strong);
+      background: var(--bg-atelier);
+      overflow: hidden;
+    }
+
+    .resume-frame-container iframe,
+    .resume-frame-container object {
+      width: 100%;
+      height: 820px;
+      border: none;
+      display: block;
+    }
+
+    /* ==========================================================================
+       11. ACT VI: CONTACT & DIRECT DISPATCH
+       ========================================================================== */
+    .contact-architecture {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+      align-items: center;
+      background: var(--bg-atelier);
+      border: 1px solid var(--hairline-strong);
+      padding: 4rem;
+    }
+
+    .contact-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-top: 1.25rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .channel-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.35rem 1.6rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--hairline-strong);
+      text-decoration: none;
+      transition: border-color 0.3s var(--ease-atelier), transform 0.3s var(--ease-atelier);
+    }
+
+    .channel-card:hover {
+      border-color: var(--accent-bronze);
+      transform: translateX(5px);
+    }
+
+    .channel-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .channel-value {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    .channel-arrow {
+      color: var(--accent-bronze);
+      font-family: var(--font-mono);
+      font-size: 1rem;
+    }
+
+    /* ==========================================================================
+       12. FOOTER
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--hairline);
+      padding: 2.5rem 0;
+      background: var(--bg-carbon);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-inner a {
+      color: var(--accent-bronze);
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       13. SCROLL REVEAL & REDUCED MOTION SAFEGUARDS
+       Content is visible by default if JS fails; enhanced only when .js-anim is active
+       ========================================================================== */
+    .reveal-up {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.85s var(--ease-atelier), transform 0.85s var(--ease-atelier);
+    }
+
+    .js-anim .reveal-up {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    .js-anim .reveal-up.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .js-anim .reveal-up,
+      .js-anim .mask-line > span {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ==========================================================================
+       14. RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-architecture,
+      .about-layout,
+      .case-study,
+      .case-study.reverse,
+      .exp-cert-split,
+      .contact-architecture {
+        grid-template-columns: 1fr;
+        gap: 2.75rem;
+      }
+
+      .case-study.reverse .case-visual {
+        order: 0;
+      }
+
+      .spec-matrix-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container,
+      .header-inner {
+        padding: 0 1.35rem;
+      }
+
+      .section-block {
+        padding: 4.75rem 0;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-list {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        background: var(--bg-atelier);
+        border-bottom: 1px solid var(--hairline-strong);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+        gap: 1rem;
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.35s var(--ease-atelier), opacity 0.35s var(--ease-atelier);
+      }
+
+      .nav-list.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .case-study,
+      .contact-architecture,
+      .timeline-card,
+      .dossier-panel {
+        padding: 1.75rem 1.35rem !important;
+      }
+
+      .breakdown-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+
+      .verified-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .resume-frame-container iframe,
+      .resume-frame-container object {
+        height: 520px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="bg-orbs">
-  <div class="orb orb1"></div><div class="orb orb2"></div>
-  <div class="orb orb3"></div><div class="orb orb4"></div>
-</div>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<nav>
-  <div class="nav-logo">// M &middot; ARSATH</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#certificates">Certs</a></li>
-    <li><a href="#resume">Resume</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<section id="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">BCA Data Science &middot; Vels University &middot; Chennai</div>
-    <h1 class="hero-name">Mohamed<br><span class="stroke">Arsath</span><span class="dot">.</span></h1>
-    <p class="hero-tagline">I build <strong>real AI systems</strong> &mdash; computer vision pipelines, gesture recognition, analytics dashboards. <strong class="type-target">Data Scientist</strong> in the making, shipping work that actually works.</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View My Work &rarr;</a>
-      <a href="https://github.com/Arsathmpt" target="_blank" class="btn-outline">&#9881; GitHub</a>
-      <a href="mailto:arsath.techdata@gmail.com" class="btn-outline">&#9993; Hire Me</a>
-    </div>
+  <!-- Top Telemetry Scroll Progress Bar -->
+  <div class="scroll-telemetry" aria-hidden="true">
+    <div class="scroll-telemetry-bar" id="scrollBar"></div>
   </div>
-  <div class="hero-badges">
-    <div class="hbadge"><div class="hbadge-icon">&#128663;</div><div><div class="hbadge-num">98%</div><div class="hbadge-label">Detection Acc.</div></div></div>
-    <div class="hbadge"><div class="hbadge-icon">&#128202;</div><div><div class="hbadge-num">407K+</div><div class="hbadge-label">Records Analyzed</div></div></div>
-    <div class="hbadge"><div class="hbadge-icon">&#129311;</div><div><div class="hbadge-num">9</div><div class="hbadge-label">Gesture Classes</div></div></div>
-  </div>
-  <div class="scroll-hint"><div class="scroll-dot"></div><div class="scroll-text">Scroll Down</div></div>
-</section>
 
-<section id="about">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">About Me</div><h2 class="st">Who I <span class="c1">Am</span></h2></div>
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>I'm <strong>Mohamed Arsath</strong>, a graduate with a Bachelor of Computer Applications (BCA) in Data Science from Vels University, Chennai. I build intelligent systems that turn raw data into real-world impact.</p>
-        <p>My work spans <strong>machine learning, computer vision, and data analytics</strong> &mdash; from YOLOv8 vehicle detection with HSV colour classification, to MediaPipe hand gesture recognition, to Power BI dashboards surfacing hidden patterns in 400K+ job postings.</p>
-        <p>I believe in shipping projects that <span class="hl">actually work</span> &mdash; no fake metrics, no random outputs. Clean code, honest models, results you can stand behind.</p>
-        <p>Currently open to <strong>internships and entry-level roles</strong> in Data Science, ML Engineering, or Computer Vision.</p>
-      </div>
-      <div class="about-card reveal rd1">
-        <div class="about-card-glow"></div>
-        <div class="edu-badge">&#127891; Graduated</div>
-        <div class="edu-school">Vels University</div>
-        <div class="edu-degree">Bachelor of Computer Applications &middot; Data Science<br><span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);">Aug 2023 &ndash; May 2026</span></div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;">Currently focused on</div>
-        <div class="focus-list">
-          <div class="focus-item"><div class="fdot" style="background:var(--accent)"></div>Deep Learning &amp; Computer Vision</div>
-          <div class="focus-item"><div class="fdot" style="background:var(--blue)"></div>Real-time ML Deployment</div>
-          <div class="focus-item"><div class="fdot" style="background:var(--purple)"></div>Data Analytics &amp; Visualization</div>
-          <div class="focus-item"><div class="fdot" style="background:var(--pink)"></div>Building portfolio projects</div>
+  <!-- Subtle Ambient Geometry -->
+  <div class="ambient-stage" aria-hidden="true">
+    <div class="ambient-ring"></div>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#hero" class="brand-mark" aria-label="Mohamed Arsath M. Home">
+        <span class="brand-monogram" aria-hidden="true">MA</span>
+        <div class="brand-text">
+          <span class="brand-name">Mohamed Arsath M.</span>
+          <span class="brand-sub">Data &amp; Operations Atelier</span>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">Skills</div><h2 class="st">My <span class="c3">Toolkit</span></h2></div>
-    <div class="skills-grid">
-      <div class="skill-card sk1 reveal"><div class="skill-icon">&#128013;</div><div class="skill-title">Languages</div><div class="tags"><span class="tag tg">Python</span><span class="tag tg">SQL</span><span class="tag tg">R</span></div></div>
-      <div class="skill-card sk2 reveal rd1"><div class="skill-icon">&#129504;</div><div class="skill-title">ML / AI</div><div class="tags"><span class="tag tp">PyTorch</span><span class="tag tp">Scikit-Learn</span><span class="tag tp">YOLOv8</span><span class="tag tp">MediaPipe</span><span class="tag tp">OpenCV</span></div></div>
-      <div class="skill-card sk3 reveal rd2"><div class="skill-icon">&#128202;</div><div class="skill-title">Data &amp; Analytics</div><div class="tags"><span class="tag tb">Pandas</span><span class="tag tb">NumPy</span><span class="tag tb">Matplotlib</span><span class="tag tb">Power BI</span><span class="tag tb">Tableau</span><span class="tag tb">Excel</span></div></div>
-      <div class="skill-card sk4 reveal rd3"><div class="skill-icon">&#128295;</div><div class="skill-title">Tools &amp; Concepts</div><div class="tags"><span class="tag ty">Git</span><span class="tag ty">Jupyter</span><span class="tag ty">Streamlit</span><span class="tag ty">VS Code</span><span class="tag tm">Feature Engineering</span><span class="tag tm">Deep Learning</span><span class="tag tm">Computer Vision</span></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">Projects</div><h2 class="st">Things I've <span class="c2">Built</span></h2></div>
-    <div class="projects-grid">
-      <div class="proj-card pc1 reveal">
-        <div class="proj-num">NLP &amp; Machine Learning</div>
-        <div class="proj-title">ResumeIQ &middot; AI-Powered ATS Parser</div>
-        <div class="proj-desc">Engineered an NLP-powered ATS parser using Python and Flask with a semantic matching algorithm to convert unstructured resumes into actionable insights for automated evaluation.</div>
-        <div class="proj-metrics"><span class="metric m1">NLP Parsing</span><span class="metric m1">Semantic Match</span><span class="metric m1">Automated Eval</span></div>
-        <div class="proj-stack"><span>Python</span><span>Flask</span><span>NLP</span></div>
-        <div class="proj-links">
-          <a href="https://resumeiq-ats-parser.onrender.com/" target="_blank" class="plink plink-gh">&#128279; Live Demo</a>
-          <a href="https://github.com/Arsathmpt/ResumeIQ-ATS-Parser" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
-      </div>
-      <div class="proj-card pc2 reveal rd1">
-        <div class="proj-num">Computer Vision</div>
-        <div class="proj-title">CarLens &middot; Car Colour Detection</div>
-        <div class="proj-desc">YOLOv8-powered vehicle detection with real-time HSV colour classification across 13 colour classes. Processes traffic images and outputs annotated bounding boxes, per-car colour breakdown, and inference timing.</div>
-        <div class="proj-metrics"><span class="metric m2">13 Colour Classes</span><span class="metric m2">YOLOv8n</span><span class="metric m2">HSV Analysis</span></div>
-        <div class="proj-stack"><span>YOLOv8</span><span>OpenCV</span><span>Python</span><span>Streamlit</span></div>
-        <div class="proj-links">
-          <a href="https://github.com/Arsathmpt/Car-colour-Detection" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
-      </div>
-      <div class="proj-card pc3 reveal rd2">
-        <div class="proj-num">Data Analytics</div>
-        <div class="proj-title">Data Jobs Dashboard &middot; Market Analysis</div>
-        <div class="proj-desc">Interactive Power BI dashboard analyzing 407K+ data job postings worldwide. Features drill-through navigation, salary scatter plots, global job distribution maps, and DAX measures revealing non-obvious market trends.</div>
-        <div class="proj-metrics"><span class="metric m3">407K+ Records</span><span class="metric m3">Drill-Through</span><span class="metric m3">DAX Measures</span></div>
-        <div class="proj-stack"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>ETL</span></div>
-        <div class="proj-links">
-          <a href="https://github.com/Arsathmpt/Data_Jobs_Dashboard" target="_blank" class="plink plink-gh">&#9881; GitHub</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="experience">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">Experience</div><h2 class="st">Where I've <span class="c4">Worked</span></h2></div>
-    <div class="reveal">
-      <div class="exp-item">
-        <div><div class="exp-period">AUG 2025 &ndash; OCT 2025</div><div class="exp-company">NullClass</div></div>
-        <div>
-          <div class="exp-role">Data Science Intern</div>
-          <ul class="exp-bullets">
-            <li>Engineered a classification model for senior citizen identification achieving <strong>92% precision</strong>, enabling targeted support interventions.</li>
-            <li>Processed <strong>50+ hours of audio data</strong> to extract MFCC features, building a voice-based age detection model with <strong>88% accuracy</strong>.</li>
-            <li>Enhanced a car color detection model through data augmentation, increasing model robustness against lighting variations by <strong>15%</strong>.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="certificates">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">Certificates</div><h2 class="st">What I've <span class="c5">Earned</span></h2></div>
-    <div class="certs-grid">
-      <a href="https://www.coursera.org/account/accomplishments/verify/9P6T9390DUYX" target="_blank" class="cert-card cc1 reveal">
-        <div class="cert-icon ci1">&#129302;</div><div><div class="cert-name">Machine Learning with Python</div><div class="cert-issuer it1">IBM &middot; COURSERA</div></div>
       </a>
-      <a href="https://www.coursera.org/account/accomplishments/verify/PC35SC6Z1H3O" target="_blank" class="cert-card cc2 reveal rd1">
-        <div class="cert-icon ci2">&#128444;</div><div><div class="cert-name">SQL for Data Science</div><div class="cert-issuer it2">UC DAVIS &middot; COURSERA</div></div>
-      </a>
-      <a href="https://www.coursera.org/account/accomplishments/verify/UVBVK6VLBRLK" target="_blank" class="cert-card cc3 reveal rd2">
-        <div class="cert-icon ci3">&#128200;</div><div><div class="cert-name">Foundations: Data, Data, Everywhere</div><div class="cert-issuer it3">GOOGLE &middot; COURSERA</div></div>
-      </a>
-      <a href="https://drive.google.com/file/d/13jxRuesUJAXwbUQfMbhOR8Ww5UEkDTC1/view" target="_blank" class="cert-card cc4 reveal rd3">
-        <div class="cert-icon ci4">&#127942;</div><div><div class="cert-name">Data Science Internship</div><div class="cert-issuer it4">NULLCLASS</div></div>
-      </a>
-    </div>
-  </div>
-</section>
 
-<section id="resume">
-  <div class="sw">
-    <div class="sh reveal">
-      <div class="sey">Resume</div>
-      <div class="resume-header">
-        <h2 class="st" style="margin:0;">My <span class="c3">Resume</span></h2>
-        <a href="Arsath_resume.pdf" download="Mohamed_Arsath_Resume.pdf" class="btn-download">&#8675; Download PDF</a>
-      </div>
-    </div>
-    
-    <div class="resume-viewer reveal">
-      <iframe src="Arsath_resume.pdf" title="Mohamed Arsath Resume"></iframe>
-    </div>
-    
-  </div>
-</section>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle navigation menu">
+        <span>Menu</span>
+        <span class="menu-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
 
-<section id="contact">
-  <div class="sw">
-    <div class="sh reveal"><div class="sey">Contact</div><h2 class="st">Let's <span class="c1">Connect</span></h2></div>
-    <div class="contact-wrap">
-      <div class="reveal" style="width: 100%;">
-        <p style="margin-bottom: 3rem; color: var(--muted); font-size: .95rem; line-height: 1.85;">I'm open to internships, freelance work, and entry-level roles in Data Science and ML. If you have an interesting opportunity, let's talk.</p>
-        <div class="contact-links">
-          <a href="mailto:arsath.techdata@gmail.com" class="clink cl1"><span>&#128231;</span> arsath.techdata@gmail.com</a>
-          <a href="tel:+917845117336" class="clink cl2"><span>&#128241;</span> +91 78451 17336</a>
-          <a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" class="clink cl3"><span>&#128188;</span> linkedin.com/in/mohamed-arsath-0462a9354</a>
-          <a href="https://github.com/Arsathmpt" target="_blank" class="clink cl4"><span>&#128025;</span> github.com/Arsathmpt</a>
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-list" id="primaryNav">
+          <li><a href="#about" class="nav-link">01. Profile</a></li>
+          <li><a href="#projects" class="nav-link">02. Works</a></li>
+          <li><a href="#skills" class="nav-link">03. Specs</a></li>
+          <li><a href="#experience" class="nav-link">04. Experience</a></li>
+          <li><a href="#resume" class="nav-link">05. Resume</a></li>
+          <li><a href="#contact" class="nav-link">06. Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ========================================================================
+         HERO SECTION — PRECISION ENGINEERING & VERIFIED METRICS LEDGER
+         ======================================================================== -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-architecture" id="heroStage">
+          <div class="hero-copy">
+            <div class="hero-meta-bar">
+              <span class="status-pulse" aria-hidden="true"></span>
+              <span>BCA Data Science Graduate &middot; Vels University &middot; Chennai</span>
+            </div>
+
+            <h1 class="hero-title">
+              <span class="mask-line"><span>Engineering <span class="italic-serif">clarity</span></span></span>
+              <span class="mask-line"><span>from raw operational</span></span>
+              <span class="mask-line"><span>&amp; analytical data.</span></span>
+            </h1>
+
+            <p class="hero-lead">
+              I’m <strong>Mohamed Arsath M.</strong> I enjoy taking messy, high-volume datasets—from 400,000+ global job records to unstructured PDF resumes and vehicle image feeds—and structuring them into business-ready dashboards, automated workflows, and tested machine learning models.
+            </p>
+
+            <div class="role-targets" aria-label="Target Roles">
+              <span class="role-pill highlight">Target: Data Analyst</span>
+              <span class="role-pill highlight">Data Operations Analyst</span>
+              <span class="role-pill">Business Operations Analyst</span>
+              <span class="role-pill">Junior Data Scientist</span>
+            </div>
+
+            <div class="hero-actions">
+              <a href="#projects" class="btn-atelier btn-primary-bronze">
+                <span>Inspect Case Studies</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+              <a href="#resume" class="btn-atelier btn-secondary-carbon">
+                <span>View Resume Dossier</span>
+              </a>
+              <a href="https://github.com/Arsathmpt" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-secondary-carbon">
+                <span>GitHub</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Substantiated Telemetry Index (Every claim linked to proof) -->
+          <aside class="telemetry-ledger reveal-up delay-1" aria-label="Verified Portfolio Metrics">
+            <div class="spec-list">
+              <a href="#case-dashboard" class="spec-row">
+                <div class="spec-top">
+                  <span class="spec-figure">400K+</span>
+                  <span class="spec-tag">Power BI &amp; DAX &rarr;</span>
+                </div>
+                <p class="spec-context">Raw global job postings transformed into interactive visual insights on salary trends, hiring platforms, and skill demand.</p>
+              </a>
+
+              <a href="#experience" class="spec-row">
+                <div class="spec-top">
+                  <span class="spec-figure">92% / 88%</span>
+                  <span class="spec-tag">NullClass Internship &rarr;</span>
+                </div>
+                <p class="spec-context">92% precision on senior-citizen identification and 88% accuracy on voice-based age detection across 50+ hours of audio.</p>
+              </a>
+
+              <a href="#case-carlens" class="spec-row">
+                <div class="spec-top">
+                  <span class="spec-figure">98% Acc.</span>
+                  <span class="spec-tag">1,000+ Test Images &rarr;</span>
+                </div>
+                <p class="spec-context">Automated vehicle colour classification using OpenCV colour histograms and YOLOv8 across 1,000+ images under varied lighting.</p>
+              </a>
+            </div>
+          </aside>
         </div>
       </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT I — PERSONAL PROFILE & ACADEMIC DOSSIER
+         ======================================================================== -->
+    <section id="about" class="section-block">
+      <div class="container">
+        <div class="section-index-row reveal-up">
+          <div>
+            <div class="act-label">Act I &middot; Philosophy &amp; Background</div>
+            <h2 class="section-heading">Built on <em>disciplined</em> data hygiene.</h2>
+          </div>
+          <div class="section-subtitle">REF // VISTAS-BCA-2026</div>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-prose reveal-up">
+            <blockquote class="editorial-quote">
+              “A dashboard or predictive model is only as trustworthy as the data cleaning, SQL logic, and validation behind it.”
+            </blockquote>
+            <p>
+              I graduated in <strong>May 2026</strong> with a <strong>Bachelor of Computer Applications (BCA) in Data Science</strong> from Vels University in Chennai (CGPA: <strong>7.58/10.0</strong>). Across my coursework and my Data Science internship at NullClass, I focused on the practical mechanics of data work: writing repeatable queries, auditing messy datasets, and turning raw inputs into deployable tools and business-ready dashboards.
+            </p>
+            <p>
+              Every day, I maintain a dedicated revision and practice routine across <strong>SQL joins, sub-queries, aggregations, and Python data manipulation</strong>. Whether I am designing an interactive Power BI report across 400,000+ job postings or building a Flask NLP parser that converts unstructured resumes into structured evaluation insights, I care deeply about accuracy, edge-case handling, and clear documentation.
+            </p>
+            <p>
+              I am currently seeking full-time, entry-level opportunities as a <strong>Data Analyst, Data Operations Analyst, Business Operations Analyst, or Junior Data Scientist</strong> where structured thinking and hands-on SQL, Python, and BI execution make an immediate difference.
+            </p>
+          </div>
+
+          <aside class="dossier-panel reveal-up delay-1" aria-label="Academic and Role Dossier">
+            <div class="dossier-header">
+              <span class="dossier-title">Technical Dossier</span>
+              <span class="dossier-status">Graduated May 2026</span>
+            </div>
+            <dl class="dossier-grid">
+              <div class="dossier-item">
+                <dt>Education</dt>
+                <dd>
+                  Bachelor of Computer Applications (Data Science)
+                  <span>Vels University, Chennai &middot; Aug 2023 – May 2026 &middot; CGPA: 7.58 / 10.0</span>
+                </dd>
+              </div>
+              <div class="dossier-item">
+                <dt>Core Operational Focus</dt>
+                <dd>
+                  Data Cleaning, ETL Pipelines, SQL Reporting &amp; BI Dashboards
+                  <span>Validating large datasets, resolving schema inconsistencies, and automating recurring analyses</span>
+                </dd>
+              </div>
+              <div class="dossier-item">
+                <dt>Applied Machine Learning</dt>
+                <dd>
+                  NLP Text Matching, Audio Classification &amp; Computer Vision
+                  <span>Classification systems achieving 88–98% accuracy across audio and image datasets</span>
+                </dd>
+              </div>
+              <div class="dossier-item">
+                <dt>Base &amp; Availability</dt>
+                <dd>
+                  Chennai, Tamil Nadu, India
+                  <span>Available immediately for Chennai, Bangalore, and Remote roles</span>
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT II — VERIFIED CASE STUDIES & INTERACTIVE TELEMETRY
+         ======================================================================== -->
+    <section id="projects" class="section-block">
+      <div class="container">
+        <div class="section-index-row reveal-up">
+          <div>
+            <div class="act-label">Act II &middot; Engineered Case Studies</div>
+            <h2 class="section-heading">Selected <em>analytical</em> &amp; ML systems.</h2>
+          </div>
+          <div class="section-subtitle">03 VERIFIED REPOSITORIES</div>
+        </div>
+
+        <div class="case-study-list">
+          <!-- CASE STUDY 01: DATA JOBS DASHBOARD -->
+          <article class="case-study reveal-up" id="case-dashboard">
+            <div class="case-content">
+              <div class="case-meta">
+                <span>Spec 01 // Business Intelligence &amp; Data Operations</span>
+              </div>
+              <h3 class="case-title">Data Jobs Market Dashboard</h3>
+
+              <div class="case-breakdown">
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Problem</span>
+                  <p class="breakdown-text">Job seekers and operations teams face noisy, unstandardized global job postings where salary bands, hiring platforms, and required technical stacks are inconsistent across regions.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">My Approach</span>
+                  <p class="breakdown-text">Cleaned and transformed <strong>400,000+ raw job posting records</strong> in Power Query, designed a structured data model, and authored custom <strong>DAX measures</strong> for global salary trends, top hiring platforms, and in-demand skill requirements.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Outcome</span>
+                  <p class="breakdown-text">Delivered an interactive Power BI dashboard with drill-through navigation, salary scatter plots, and geographic distribution maps that surface market benchmarks in seconds.</p>
+                </div>
+              </div>
+
+              <div class="verified-metrics" aria-label="Dashboard Project Metrics">
+                <div class="v-metric">
+                  <span class="v-metric-val">400K+ Rows</span>
+                  <span class="v-metric-desc">Raw job postings transformed into structured visual insights</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">Custom DAX</span>
+                  <span class="v-metric-desc">Dynamic KPI aggregations for salary trends &amp; platform share</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">Drill-Through</span>
+                  <span class="v-metric-desc">Role-specific views across Data Analyst, Scientist &amp; Engineer tracks</span>
+                </div>
+              </div>
+
+              <div class="tech-tags" aria-label="Technologies used">
+                <span>Power BI</span>
+                <span>DAX</span>
+                <span>Power Query</span>
+                <span>Data Modeling</span>
+                <span>ETL Cleaning</span>
+              </div>
+
+              <div class="case-links">
+                <a href="https://github.com/Arsathmpt/Data_Jobs_Dashboard" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-primary-bronze">
+                  <span>Inspect Repository &amp; PBIX</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Interactive Telemetry Preview: Role Filter & Skill Demand -->
+            <div class="case-visual tilt-card">
+              <div class="visual-header">
+                <span>TELEMETRY // SKILL DEMAND BY ROLE (400,000+ POSTINGS)</span>
+                <div class="visual-controls" role="group" aria-label="Filter simulated dashboard view">
+                  <button type="button" class="filter-chip active" data-role="all">All Roles</button>
+                  <button type="button" class="filter-chip" data-role="analyst">Data Analyst</button>
+                  <button type="button" class="filter-chip" data-role="scientist">Data Scientist</button>
+                </div>
+              </div>
+
+              <svg class="schematic-svg" viewBox="0 0 480 250" role="img" aria-label="Interactive bar chart preview from the Power BI Data Jobs Dashboard showing SQL, Python, Power BI, and Tableau frequency across 400K+ job postings">
+                <rect width="480" height="250" fill="#0B0C0E" />
+                <g stroke="#1D2028" stroke-width="1">
+                  <line x1="90" y1="30" x2="450" y2="30" />
+                  <line x1="90" y1="80" x2="450" y2="80" />
+                  <line x1="90" y1="130" x2="450" y2="130" />
+                  <line x1="90" y1="180" x2="450" y2="180" />
+                  <line x1="90" y1="215" x2="450" y2="215" />
+                </g>
+
+                <g fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="11">
+                  <text x="14" y="52">SQL</text>
+                  <text x="14" y="102">Python</text>
+                  <text x="14" y="152">Power BI</text>
+                  <text x="14" y="202">Tableau</text>
+                </g>
+
+                <g>
+                  <rect id="bar-sql" x="95" y="36" width="310" height="22" fill="#C5A059" rx="1" style="transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);" />
+                  <text id="val-sql" x="415" y="52" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="11">64%</text>
+
+                  <rect id="bar-py" x="95" y="86" width="295" height="22" fill="#8E8A80" rx="1" style="transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);" />
+                  <text id="val-py" x="400" y="102" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="11">61%</text>
+
+                  <rect id="bar-pbi" x="95" y="136" width="215" height="22" fill="#C5A059" fill-opacity="0.75" rx="1" style="transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);" />
+                  <text id="val-pbi" x="320" y="152" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="11">44%</text>
+
+                  <rect id="bar-tab" x="95" y="186" width="190" height="22" fill="#5A5852" rx="1" style="transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);" />
+                  <text id="val-tab" x="295" y="202" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="11">39%</text>
+                </g>
+              </svg>
+
+              <div class="visual-caption">
+                <span id="dashboardCaption">ACTIVE VIEW: ALL DATA ROLES (400,000+ RECORDS)</span>
+                <span>POWER QUERY + DAX</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- CASE STUDY 02: RESUMEIQ ATS PARSER -->
+          <article class="case-study reverse reveal-up" id="case-resumeiq">
+            <div class="case-content">
+              <div class="case-meta">
+                <span>Spec 02 // NLP Pipeline &amp; Web Deployment</span>
+              </div>
+              <h3 class="case-title">ResumeIQ &middot; AI-Powered ATS Parser</h3>
+
+              <div class="case-breakdown">
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Problem</span>
+                  <p class="breakdown-text">Unstructured PDF resumes are difficult to evaluate consistently against role-specific technical requirements in high-volume hiring workflows.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">My Approach</span>
+                  <p class="breakdown-text">Engineered an NLP-powered ATS resume parser using <strong>Python and Flask</strong>, implementing a <strong>semantic matching algorithm</strong> to convert unstructured resumes into structured, actionable insights.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Outcome</span>
+                  <p class="breakdown-text">Deployed as a live web application on Render that outputs automated alignment scores, matched skill inventories, and keyword gap breakdowns.</p>
+                </div>
+              </div>
+
+              <div class="verified-metrics" aria-label="ResumeIQ Project Metrics">
+                <div class="v-metric">
+                  <span class="v-metric-val">NLP Parsing</span>
+                  <span class="v-metric-desc">Unstructured resume text extraction &amp; token normalization</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">Semantic Match</span>
+                  <span class="v-metric-desc">Algorithmic comparison between candidate skills &amp; JD criteria</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">Live on Render</span>
+                  <span class="v-metric-desc">End-to-end Python &amp; Flask web app deployed for instant testing</span>
+                </div>
+              </div>
+
+              <div class="tech-tags" aria-label="Technologies used">
+                <span>Python</span>
+                <span>Flask</span>
+                <span>NLP</span>
+                <span>Semantic Matching</span>
+                <span>Render Cloud</span>
+              </div>
+
+              <div class="case-links">
+                <a href="https://resumeiq-ats-parser.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-primary-bronze">
+                  <span>Launch Live App</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+                <a href="https://github.com/Arsathmpt/ResumeIQ-ATS-Parser" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-secondary-carbon">
+                  <span>View GitHub Repo</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Schematic Visual: NLP Tokenization & Semantic Scoring Pipeline -->
+            <div class="case-visual tilt-card">
+              <div class="visual-header">
+                <span>PIPELINE // NLP SEMANTIC MATCHING ENGINE</span>
+                <span>STATUS: LIVE ON RENDER</span>
+              </div>
+
+              <svg class="schematic-svg" viewBox="0 0 480 250" role="img" aria-label="Architectural diagram of ResumeIQ showing PDF text extraction, token normalization, semantic matching calculation, and structured insight output">
+                <rect width="480" height="250" fill="#0B0C0E" />
+                
+                <rect x="20" y="34" width="125" height="68" fill="#16191F" stroke="#323744" />
+                <text x="32" y="58" fill="#C5A059" font-family="JetBrains Mono, monospace" font-size="10">INPUT 01</text>
+                <text x="32" y="76" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="600">Resume PDF</text>
+                <text x="32" y="92" fill="#8E8A80" font-family="JetBrains Mono, monospace" font-size="9">Unstructured Text</text>
+
+                <rect x="20" y="144" width="125" height="68" fill="#16191F" stroke="#323744" />
+                <text x="32" y="168" fill="#C5A059" font-family="JetBrains Mono, monospace" font-size="10">INPUT 02</text>
+                <text x="32" y="186" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="600">Job Description</text>
+                <text x="32" y="202" fill="#8E8A80" font-family="JetBrains Mono, monospace" font-size="9">Target Role Criteria</text>
+
+                <path d="M145 68 L195 110 M145 178 L195 135" stroke="#C5A059" stroke-width="1.2" stroke-dasharray="4 3" fill="none" />
+
+                <rect x="195" y="75" width="130" height="96" fill="#16191F" stroke="#C5A059" stroke-width="1.5" />
+                <text x="210" y="100" fill="#C5A059" font-family="JetBrains Mono, monospace" font-size="10">FLASK NLP CORE</text>
+                <text x="210" y="120" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="600">Semantic Match</text>
+                <text x="210" y="136" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="600">Algorithm</text>
+                <text x="210" y="155" fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="9">Structured Evaluation</text>
+
+                <line x1="325" y1="123" x2="355" y2="123" stroke="#C5A059" stroke-width="1.5" />
+
+                <rect x="355" y="45" width="108" height="156" fill="#111317" stroke="#323744" />
+                <text x="368" y="68" fill="#8E8A80" font-family="JetBrains Mono, monospace" font-size="9">ATS INSIGHTS</text>
+                <text x="368" y="102" fill="#C5A059" font-family="Cormorant Garamond, serif" font-size="34" font-weight="700">84%</text>
+                <line x1="368" y1="114" x2="450" y2="114" stroke="#232730" />
+                <text x="368" y="132" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="9">+ SQL [Matched]</text>
+                <text x="368" y="148" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="9">+ Python [Matched]</text>
+                <text x="368" y="164" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="9">+ Power BI [Matched]</text>
+                <text x="368" y="184" fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="9">- Actionable Output</text>
+              </svg>
+
+              <div class="visual-caption">
+                <span>STRUCTURED RESUME EVALUATION PIPELINE</span>
+                <span>PYTHON + FLASK</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- CASE STUDY 03: AUTOMATED CAR COLOUR DETECTION -->
+          <article class="case-study reveal-up" id="case-carlens">
+            <div class="case-content">
+              <div class="case-meta">
+                <span>Spec 03 // Computer Vision &amp; Colorimetry</span>
+              </div>
+              <h3 class="case-title">Automated Car Colour Detection (CarLens)</h3>
+
+              <div class="case-breakdown">
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Problem</span>
+                  <p class="breakdown-text">Outdoor vehicle images suffer from glare, shadows, and shifting daylight, causing naive RGB color classifiers to misidentify car colors.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">My Approach</span>
+                  <p class="breakdown-text">Built an automated vehicle color detection algorithm using <strong>OpenCV color histograms (HSV space)</strong> paired with <strong>YOLOv8</strong> vehicle bounding-box isolation and targeted data augmentation.</p>
+                </div>
+                <div class="breakdown-row">
+                  <span class="breakdown-label">The Outcome</span>
+                  <p class="breakdown-text">Achieved <strong>98% accuracy across 1,000+ images</strong> under varying lighting conditions, with data augmentation improving lighting robustness by <strong>15%</strong>.</p>
+                </div>
+              </div>
+
+              <div class="verified-metrics" aria-label="Car Colour Detection Project Metrics">
+                <div class="v-metric">
+                  <span class="v-metric-val">98% Accuracy</span>
+                  <span class="v-metric-desc">Evaluated across 1,000+ vehicle images under varying lighting</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">+15% Robustness</span>
+                  <span class="v-metric-desc">Gain against lighting variation via targeted data augmentation</span>
+                </div>
+                <div class="v-metric">
+                  <span class="v-metric-val">13 HSV Classes</span>
+                  <span class="v-metric-desc">OpenCV color histogram classification + YOLOv8 detection</span>
+                </div>
+              </div>
+
+              <div class="tech-tags" aria-label="Technologies used">
+                <span>OpenCV</span>
+                <span>Color Histograms (HSV)</span>
+                <span>YOLOv8</span>
+                <span>Python</span>
+                <span>Streamlit</span>
+              </div>
+
+              <div class="case-links">
+                <a href="https://github.com/Arsathmpt/Car-colour-Detection" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-primary-bronze">
+                  <span>Inspect GitHub Repository</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Schematic Visual: OpenCV Histogram + YOLOv8 Telemetry -->
+            <div class="case-visual tilt-card">
+              <div class="visual-header">
+                <span>OPTICAL TELEMETRY // 98% ACCURACY ACROSS 1,000+ IMAGES</span>
+                <span>OPENCV HISTOGRAMS</span>
+              </div>
+
+              <svg class="schematic-svg" viewBox="0 0 480 250" role="img" aria-label="Technical diagram of Automated Car Colour Detection showing vehicle bounding box, HSV region crop, and color histogram channels">
+                <rect width="480" height="250" fill="#0B0C0E" />
+                
+                <rect x="24" y="24" width="265" height="202" fill="#111317" stroke="#232730" />
+                <rect x="52" y="58" width="210" height="128" fill="none" stroke="#C5A059" stroke-width="1.5" />
+                <path d="M52 72 L52 58 L66 58 M248 58 L262 58 L262 72 M52 172 L52 186 L66 186 M248 186 L262 186 L262 172" stroke="#F4F1EA" stroke-width="2" fill="none" />
+                
+                <rect x="52" y="40" width="178" height="18" fill="#C5A059" />
+                <text x="58" y="53" fill="#0B0C0E" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">HISTOGRAM_ACC // 98.0%</text>
+
+                <rect x="112" y="96" width="90" height="52" fill="rgba(197, 160, 89, 0.12)" stroke="#F4F1EA" stroke-dasharray="3 3" />
+                <text x="122" y="126" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="9">HSV ROI CROP</text>
+
+                <line class="scan-beam" x1="54" y1="62" x2="260" y2="62" stroke="rgba(197, 160, 89, 0.65)" stroke-width="1.5" />
+
+                <rect x="308" y="24" width="148" height="202" fill="#16191F" stroke="#323744" />
+                <text x="322" y="48" fill="#C5A059" font-family="JetBrains Mono, monospace" font-size="10">HSV HISTOGRAM</text>
+                
+                <text x="322" y="76" fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="10">HUE (H): 210&deg;</text>
+                <rect x="322" y="84" width="120" height="6" fill="#232730" />
+                <rect x="322" y="84" width="88" height="6" fill="#C5A059" />
+
+                <text x="322" y="114" fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="10">SAT (S): 78%</text>
+                <rect x="322" y="122" width="120" height="6" fill="#232730" />
+                <rect x="322" y="122" width="94" height="6" fill="#F4F1EA" />
+
+                <text x="322" y="152" fill="#B8B4AA" font-family="JetBrains Mono, monospace" font-size="10">VAL (V): 82%</text>
+                <rect x="322" y="160" width="120" height="6" fill="#232730" />
+                <rect x="322" y="160" width="98" height="6" fill="#8E8A80" />
+
+                <line x1="322" y1="182" x2="442" y2="182" stroke="#232730" />
+                <text x="322" y="198" fill="#8E8A80" font-family="JetBrains Mono, monospace" font-size="9">TEST BENCHMARK:</text>
+                <text x="322" y="214" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">1,000+ IMAGES</text>
+              </svg>
+
+              <div class="visual-caption">
+                <span>98% ACCURACY UNDER VARYING LIGHTING</span>
+                <span>OPENCV + PYTHON</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT III — TECHNICAL SPECIFICATION MATRIX (EDITORIAL LEDGER LAYOUT)
+         ======================================================================== -->
+    <section id="skills" class="section-block">
+      <div class="container">
+        <div class="section-index-row reveal-up">
+          <div>
+            <div class="act-label">Act III &middot; Technical Specifications</div>
+            <h2 class="section-heading">Core <em>instruments</em> &amp; stack.</h2>
+          </div>
+          <div class="section-subtitle">ALIGNED WITH RESUME SPEC</div>
+        </div>
+
+        <div class="spec-table-wrap">
+          <div class="spec-matrix-row reveal-up">
+            <div class="matrix-domain">
+              <span>Domain 01</span>
+              Languages
+            </div>
+            <div class="matrix-tools">
+              <span class="matrix-tool">Python</span>
+              <span class="matrix-tool">SQL</span>
+              <span class="matrix-tool">R</span>
+            </div>
+            <p class="matrix-application">
+              Complex queries, joins, sub-queries, data manipulation, and end-to-end analytical scripting.
+            </p>
+          </div>
+
+          <div class="spec-matrix-row reveal-up">
+            <div class="matrix-domain">
+              <span>Domain 02</span>
+              Libraries
+            </div>
+            <div class="matrix-tools">
+              <span class="matrix-tool">Pandas</span>
+              <span class="matrix-tool">NumPy</span>
+              <span class="matrix-tool">Scikit-Learn</span>
+              <span class="matrix-tool">PyTorch</span>
+              <span class="matrix-tool">Matplotlib</span>
+              <span class="matrix-tool">OpenCV</span>
+            </div>
+            <p class="matrix-application">
+              Data cleaning, exploratory data analysis, supervised classification, audio feature extraction, and computer vision.
+            </p>
+          </div>
+
+          <div class="spec-matrix-row reveal-up">
+            <div class="matrix-domain">
+              <span>Domain 03</span>
+              Tools &amp; BI Platforms
+            </div>
+            <div class="matrix-tools">
+              <span class="matrix-tool">Power BI</span>
+              <span class="matrix-tool">Tableau</span>
+              <span class="matrix-tool">Microsoft Excel</span>
+              <span class="matrix-tool">Git</span>
+              <span class="matrix-tool">Jupyter Notebook</span>
+              <span class="matrix-tool">VS Code</span>
+            </div>
+            <p class="matrix-application">
+              Interactive executive dashboards, DAX measures, Power Query ETL, and version-controlled workflows.
+            </p>
+          </div>
+
+          <div class="spec-matrix-row reveal-up">
+            <div class="matrix-domain">
+              <span>Domain 04</span>
+              Core Concepts
+            </div>
+            <div class="matrix-tools">
+              <span class="matrix-tool">Data Analytics</span>
+              <span class="matrix-tool">Machine Learning</span>
+              <span class="matrix-tool">Deep Learning</span>
+              <span class="matrix-tool">Computer Vision</span>
+              <span class="matrix-tool">Feature Engineering</span>
+              <span class="matrix-tool">NLP</span>
+            </div>
+            <p class="matrix-application">
+              Turning raw operational data into deployable web tools, verified classifiers, and business-ready dashboards.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT IV — EXPERIENCE & VERIFIED CREDENTIALS
+         ======================================================================== -->
+    <section id="experience" class="section-block">
+      <div class="container">
+        <div class="section-index-row reveal-up">
+          <div>
+            <div class="act-label">Act IV &middot; Field Experience &amp; Accreditations</div>
+            <h2 class="section-heading">Proven <em>execution</em> &amp; certificates.</h2>
+          </div>
+          <div class="section-subtitle">VERIFIED CREDENTIALS</div>
+        </div>
+
+        <div class="exp-cert-split">
+          <!-- Left: Internship Experience with Contextualized Metrics -->
+          <div class="timeline-card reveal-up">
+            <div class="timeline-period">August 2025 &ndash; October 2025 &middot; Remote</div>
+            <h3 class="timeline-role">Data Science Intern</h3>
+            <div class="timeline-org">
+              NullClass &middot; 
+              <a href="https://drive.google.com/file/d/13jxRuesUJAXwbUQfMbhOR8Ww5UEkDTC1/view" target="_blank" rel="noopener noreferrer" style="color: var(--accent-bronze); text-decoration: none; font-family: var(--font-mono); font-size: 0.75rem;">View Certificate &nearr;</a>
+            </div>
+
+            <ul class="timeline-list">
+              <li>
+                Built a voice-based age detection classifier achieving <strong>88% accuracy</strong>, processing <strong>50+ hours of audio data</strong> through feature extraction and model tuning.
+              </li>
+              <li>
+                Developed a senior citizen identification model reaching <strong>92% precision</strong>, supporting downstream classification workflows.
+              </li>
+              <li>
+                Improved a car color detection model's robustness to lighting variation by <strong>15%</strong> through targeted data augmentation techniques.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Verified Certificate Ledger -->
+          <div class="cert-ledger reveal-up delay-1" aria-label="Verified Certificates">
+            <a href="https://www.coursera.org/account/accomplishments/verify/9P6T9390DUYX" target="_blank" rel="noopener noreferrer" class="cert-row">
+              <div class="cert-info">
+                <h3>Machine Learning with Python</h3>
+                <span class="cert-issuer">IBM &middot; Coursera Verification ID: 9P6T9390DUYX</span>
+                <span class="cert-summary">Regression, classification, and clustering algorithms applied across 3+ capstone projects.</span>
+              </div>
+              <span class="cert-verify">Verify &nearr;</span>
+            </a>
+
+            <a href="https://www.coursera.org/account/accomplishments/verify/PC35SC6Z1H3O" target="_blank" rel="noopener noreferrer" class="cert-row">
+              <div class="cert-info">
+                <h3>SQL for Data Science</h3>
+                <span class="cert-issuer">UC Davis &middot; Coursera Verification ID: PC35SC6Z1H3O</span>
+                <span class="cert-summary">Complex queries, joins, sub-queries, and data manipulation for analysis.</span>
+              </div>
+              <span class="cert-verify">Verify &nearr;</span>
+            </a>
+
+            <a href="https://www.coursera.org/account/accomplishments/verify/UVBVK6VLBRLK" target="_blank" rel="noopener noreferrer" class="cert-row">
+              <div class="cert-info">
+                <h3>Foundations: Data, Data, Everywhere</h3>
+                <span class="cert-issuer">Google &middot; Coursera Verification ID: UVBVK6VLBRLK</span>
+                <span class="cert-summary">Data analyst fundamentals, the data lifecycle, and data-informed business decisions.</span>
+              </div>
+              <span class="cert-verify">Verify &nearr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT V — SINGLE-PAGE RESUME DOSSIER (LIVE HTML SHEET + PDF VIEWER)
+         ======================================================================== -->
+    <section id="resume" class="section-block">
+      <div class="container">
+        <div class="section-index-row reveal-up">
+          <div>
+            <div class="act-label">Act V &middot; Curriculum Vitae</div>
+            <h2 class="section-heading">Single-page <em>dossier</em>.</h2>
+          </div>
+          <div class="section-subtitle">FILE // Mohamed_Resume.pdf</div>
+        </div>
+
+        <!-- Top Action Bar -->
+        <div class="resume-bar reveal-up">
+          <div class="resume-bar-text">
+            <h3>Mohamed Arsath M. &mdash; Official Resume</h3>
+            <p>BCA (Data Science) &middot; Vels University (CGPA: 7.58 / 10.0) &middot; Strictly Single-Page Format</p>
+          </div>
+          <div class="hero-actions">
+            <a href="Mohamed_Resume.pdf" download="Mohamed_Resume.pdf" class="btn-atelier btn-primary-bronze">
+              <span>Download PDF</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+            </a>
+            <a href="Mohamed_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-atelier btn-secondary-carbon">
+              <span>Open Fullscreen PDF</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Interactive View Switcher (HTML Sheet vs Embedded PDF) -->
+        <div class="visual-controls reveal-up" style="margin-bottom: 1.25rem;" role="tablist" aria-label="Resume view mode">
+          <button type="button" class="filter-chip active" id="tabHtmlResume" onclick="switchResumeView('html')" role="tab" aria-selected="true">
+            Interactive Web Dossier
+          </button>
+          <button type="button" class="filter-chip" id="tabPdfResume" onclick="switchResumeView('pdf')" role="tab" aria-selected="false">
+            Embedded PDF Viewer (Mohamed_Resume.pdf)
+          </button>
+        </div>
+
+        <!-- VIEW 1: Styled HTML Replica of Mohamed_Resume.pdf (Works on all mobile & desktop screens) -->
+        <div id="resumeHtmlView" class="dossier-panel reveal-up" style="padding: 3rem; border-color: var(--hairline-strong);">
+          <!-- Resume Header -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--hairline-strong); margin-bottom: 2rem;">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 600; line-height: 1.05; color: var(--text-primary); letter-spacing: -0.01em;">
+                MOHAMED ARSATH M
+              </h3>
+              <p style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-bronze); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.4rem;">
+                Chennai, India &middot; BCA Data Science
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.8; text-align: right;">
+              <div><a href="mailto:arsath.techdata@gmail.com" style="color: var(--text-primary); text-decoration: none;">arsath.techdata@gmail.com</a></div>
+              <div><a href="https://arsathmpt.github.io/portfolio" target="_blank" rel="noopener noreferrer" style="color: var(--accent-bronze); text-decoration: none;">Portfolio: arsathmpt.github.io/portfolio</a></div>
+              <div><a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none;">LinkedIn: linkedin.com/in/mohamed-arsath-0462a9354</a></div>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div style="margin-bottom: 2rem;">
+            <div class="act-label" style="margin-bottom: 0.6rem;">Summary</div>
+            <p style="color: var(--text-secondary); font-size: 0.96rem; line-height: 1.75;">
+              Data Science graduate with hands-on experience building machine learning and computer vision models, including classification systems achieving 88&ndash;98% accuracy. Skilled in Python, SQL, and end-to-end ML workflows, with a track record of turning raw data into deployable tools and business-ready dashboards.
+            </p>
+          </div>
+
+          <!-- Two-Column Grid for Education & Skills -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
+            <div>
+              <div class="act-label" style="margin-bottom: 0.75rem;">Education</div>
+              <h4 style="font-size: 1.05rem; color: var(--text-primary); font-weight: 600;">Bachelor of Computer Applications (Data Science)</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.2rem;">Vels University, Chennai, India</p>
+              <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-bronze); margin-top: 0.5rem;">
+                Aug 2023 &ndash; May 2026 &middot; CGPA: 7.58 / 10.0
+              </p>
+            </div>
+
+            <div>
+              <div class="act-label" style="margin-bottom: 0.75rem;">Skills</div>
+              <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75;">
+                <div><strong style="color: var(--text-primary);">Languages:</strong> Python, SQL, R</div>
+                <div><strong style="color: var(--text-primary);">Libraries:</strong> Pandas, NumPy, Scikit-Learn, PyTorch, Matplotlib, OpenCV</div>
+                <div><strong style="color: var(--text-primary);">Concepts:</strong> Machine Learning, Deep Learning, Computer Vision, Feature Engineering, NLP</div>
+                <div><strong style="color: var(--text-primary);">Tools:</strong> Excel, Git, Jupyter Notebook, VS Code, Power BI, Tableau</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Internship Experience -->
+          <div style="margin-bottom: 2rem;">
+            <div class="act-label" style="margin-bottom: 0.75rem;">Internship Experience</div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 0.6rem;">
+              <h4 style="font-size: 1.05rem; color: var(--text-primary); font-weight: 600;">
+                Data Science Intern, NullClass &middot; 
+                <a href="https://drive.google.com/file/d/13jxRuesUJAXwbUQfMbhOR8Ww5UEkDTC1/view" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-bronze); text-decoration: none;">View Certificate &nearr;</a>
+              </h4>
+              <span style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent-bronze);">Aug 2025 &ndash; Oct 2025</span>
+            </div>
+            <ul class="timeline-list">
+              <li>Built a voice-based age detection classifier achieving <strong>88% accuracy</strong>, processing 50+ hours of audio data through feature extraction and model tuning.</li>
+              <li>Developed a senior citizen identification model reaching <strong>92% precision</strong>, supporting downstream classification workflows.</li>
+              <li>Improved a car color detection model's robustness to lighting variation by <strong>15%</strong> through targeted data augmentation techniques.</li>
+            </ul>
+          </div>
+
+          <!-- Projects -->
+          <div style="margin-bottom: 2rem;">
+            <div class="act-label" style="margin-bottom: 0.85rem;">Projects</div>
+            <div style="display: grid; gap: 1.25rem;">
+              <div style="padding: 1.15rem; background: var(--bg-panel); border: 1px solid var(--hairline);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--text-primary); font-size: 0.98rem;">ResumeIQ: AI-Powered ATS Parser</strong>
+                  <span style="font-family: var(--font-mono); font-size: 0.7rem;">
+                    <a href="https://resumeiq-ats-parser.onrender.com/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-bronze); text-decoration: none; margin-right: 0.75rem;">Live App &nearr;</a>
+                    <a href="https://github.com/Arsathmpt/ResumeIQ-ATS-Parser" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none;">GitHub &nearr;</a>
+                  </span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                  Engineered an NLP-powered ATS resume parser using Python and Flask, implementing a semantic matching algorithm to convert unstructured resumes into structured, actionable insights for automated evaluation.
+                </p>
+              </div>
+
+              <div style="padding: 1.15rem; background: var(--bg-panel); border: 1px solid var(--hairline);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--text-primary); font-size: 0.98rem;">Data Jobs Dashboard</strong>
+                  <a href="https://github.com/Arsathmpt/Data_Jobs_Dashboard" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-bronze); text-decoration: none;">GitHub &nearr;</a>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                  Designed an interactive Power BI dashboard transforming 400,000+ raw job postings into visual insights on global salary trends, top hiring platforms, and in-demand skill requirements.
+                </p>
+              </div>
+
+              <div style="padding: 1.15rem; background: var(--bg-panel); border: 1px solid var(--hairline);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--text-primary); font-size: 0.98rem;">Automated Car Colour Detection</strong>
+                  <a href="https://github.com/Arsathmpt/Car-colour-Detection" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-bronze); text-decoration: none;">GitHub &nearr;</a>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                  Built an automated vehicle color detection algorithm using OpenCV color histograms, achieving <strong>98% accuracy across 1,000+ images</strong> under varying lighting conditions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificates -->
+          <div>
+            <div class="act-label" style="margin-bottom: 0.75rem;">Certificates</div>
+            <ul class="timeline-list">
+              <li><strong>Machine Learning with Python (IBM)</strong> &mdash; Regression, classification, and clustering algorithms applied across 3+ capstone projects.</li>
+              <li><strong>SQL for Data Science (UC Davis)</strong> &mdash; Complex queries, joins, sub-queries, and data manipulation for analysis.</li>
+              <li><strong>Foundations: Data, Data, Everywhere (Google)</strong> &mdash; Data analyst fundamentals, the data lifecycle, and data-informed business decisions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- VIEW 2: Embedded PDF File (Mohamed_Resume.pdf) -->
+        <div id="resumePdfView" style="display: none;">
+          <div class="resume-frame-container">
+            <object data="Mohamed_Resume.pdf#toolbar=1&navpanes=0" type="application/pdf">
+              <iframe src="Mohamed_Resume.pdf" title="Embedded PDF Viewer for Mohamed Arsath M. Resume">
+                <p style="padding: 2rem; color: var(--text-secondary);">
+                  Your browser does not support inline PDF viewing. 
+                  <a href="Mohamed_Resume.pdf" download="Mohamed_Resume.pdf" style="color: var(--accent-bronze);">Click here to download Mohamed_Resume.pdf</a>.
+                </p>
+              </iframe>
+            </object>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="draft-line" aria-hidden="true"></div>
+
+    <!-- ========================================================================
+         ACT VI — CONTACT & DIRECT DISPATCH
+         ======================================================================== -->
+    <section id="contact" class="section-block">
+      <div class="container">
+        <div class="contact-architecture reveal-up">
+          <div>
+            <div class="act-label">Act VI &middot; Direct Dispatch</div>
+            <h2 class="section-heading">Ready for <em>analytics</em> &amp; operations teams.</h2>
+            <p class="contact-lead">
+              I am actively interviewing for entry-level <strong>Data Analyst, Data Operations Analyst, Business Operations Analyst, and Junior Data Scientist</strong> roles. Whether you need someone to audit large operational datasets, maintain SQL reporting pipelines, or ship practical Python tools, I’d love to connect.
+            </p>
+          </div>
+
+          <div class="contact-channels">
+            <a href="mailto:arsath.techdata@gmail.com" class="channel-card">
+              <div>
+                <span class="channel-label">Primary Professional Email</span>
+                <span class="channel-value">arsath.techdata@gmail.com</span>
+              </div>
+              <span class="channel-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/mohamed-arsath-0462a9354" target="_blank" rel="noopener noreferrer" class="channel-card">
+              <div>
+                <span class="channel-label">LinkedIn Profile</span>
+                <span class="channel-value">linkedin.com/in/mohamed-arsath-0462a9354</span>
+              </div>
+              <span class="channel-arrow" aria-hidden="true">&nearr;</span>
+            </a>
+
+            <a href="https://github.com/Arsathmpt" target="_blank" rel="noopener noreferrer" class="channel-card">
+              <div>
+                <span class="channel-label">GitHub Code Repositories</span>
+                <span class="channel-value">github.com/Arsathmpt</span>
+              </div>
+              <span class="channel-arrow" aria-hidden="true">&nearr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>&copy; 2026 MOHAMED ARSATH M. &middot; CHENNAI, INDIA</div>
+      <div>CRAFTED WITH PRECISION &middot; <a href="https://github.com/Arsathmpt/portfolio" target="_blank" rel="noopener noreferrer">SOURCE REPOSITORY</a></div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<footer>
-  <div class="fl">&copy; 2026 MOHAMED ARSATH &middot; ALL RIGHTS RESERVED</div>
-  <div class="fr">BUILT WITH &hearts; &middot; <a href="https://github.com/Arsathmpt" target="_blank">GITHUB</a> &middot; CHENNAI, INDIA</div>
-</footer>
+  <!-- ==========================================================================
+       CHOREOGRAPHED INTERACTION & TELEMETRY SCRIPT
+       Respects prefers-reduced-motion; degrades gracefully if JS is disabled
+       ========================================================================== -->
+  <script>
+    // Resume View Switcher (Interactive Web Sheet vs Embedded PDF)
+    function switchResumeView(mode) {
+      const htmlView = document.getElementById('resumeHtmlView');
+      const pdfView = document.getElementById('resumePdfView');
+      const tabHtml = document.getElementById('tabHtmlResume');
+      const tabPdf = document.getElementById('tabPdfResume');
+      if (!htmlView || !pdfView) return;
 
-<script>
-const obs = new IntersectionObserver((entries, observer) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target); 
+      if (mode === 'pdf') {
+        htmlView.style.display = 'none';
+        pdfView.style.display = 'block';
+        tabPdf.classList.add('active');
+        tabPdf.setAttribute('aria-selected', 'true');
+        tabHtml.classList.remove('active');
+        tabHtml.setAttribute('aria-selected', 'false');
+      } else {
+        htmlView.style.display = 'block';
+        pdfView.style.display = 'none';
+        tabHtml.classList.add('active');
+        tabHtml.setAttribute('aria-selected', 'true');
+        tabPdf.classList.remove('active');
+        tabPdf.setAttribute('aria-selected', 'false');
+      }
     }
-  });
-}, {
-  rootMargin: "0px 0px -20px 0px", 
-  threshold: 0 
-});
 
-setTimeout(() => {
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
-}, 1500);
+    (function () {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      if (!prefersReducedMotion) {
+        document.documentElement.classList.add('js-anim');
+      }
 
-const secs = document.querySelectorAll('section[id]');
-const navAs = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let active = '';
-  secs.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 250) active = s.id;
-  });
-  navAs.forEach(a => {
-    const on = a.getAttribute('href') === '#' + active;
-    a.style.color = on ? 'var(--accent)' : '';
-    if (on) a.classList.add('active'); else a.classList.remove('active');
-  });
-});
+      // Trigger Hero Masked Entrance
+      window.addEventListener('DOMContentLoaded', () => {
+        const heroStage = document.getElementById('heroStage');
+        if (heroStage) {
+          requestAnimationFrame(() => {
+            heroStage.classList.add('hero-ready');
+          });
+        }
+      });
 
-const words = ['Data Scientist', 'ML Engineer', 'CV Developer', 'Problem Solver'];
-let wi = 0, ci = 0, isDeleting = false;
-const tgt = document.querySelector('.type-target');
-if (tgt) {
-  tgt.textContent = '';
-  const tc = document.createElement('span'); tc.className = 'tcursor'; tgt.after(tc);
-  function type() {
-    const w = words[wi];
-    if (!isDeleting) {
-      tgt.textContent = w.substring(0, ci + 1); ci++;
-      if (ci === w.length) { isDeleting = true; setTimeout(type, 1800); return; }
-    } else {
-      tgt.textContent = w.substring(0, ci - 1); ci--;
-      if (ci === 0) { isDeleting = false; wi = (wi + 1) % words.length; }
-    }
-    setTimeout(type, isDeleting ? 60 : 90);
-  }
-  setTimeout(type, 1000);
-}
-</script>
+      // Mobile Menu Toggle + Escape Key Support
+      const menuToggle = document.getElementById('menuToggle');
+      const primaryNav = document.getElementById('primaryNav');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      if (menuToggle && primaryNav) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', String(!isOpen));
+          primaryNav.classList.toggle('open', !isOpen);
+        });
+
+        navLinks.forEach((link) => {
+          link.addEventListener('click', () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('open');
+          });
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && primaryNav.classList.contains('open')) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('open');
+            menuToggle.focus();
+          }
+        });
+      }
+
+      // IntersectionObserver for Reveal-Up Blocks and Drafting Lines
+      const revealItems = document.querySelectorAll('.reveal-up, .draft-line');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                if (entry.target.classList.contains('draft-line')) {
+                  entry.target.classList.add('drawn');
+                } else {
+                  entry.target.classList.add('in-view');
+                }
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+        );
+        revealItems.forEach((el) => io.observe(el));
+      } else {
+        revealItems.forEach((el) => {
+          el.classList.add('in-view', 'drawn');
+        });
+      }
+
+      // Top Scroll Telemetry Bar & Active Section Highlighting
+      const scrollBar = document.getElementById('scrollBar');
+      const sections = document.querySelectorAll('main section[id]');
+
+      function onScroll() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollBar && docHeight > 0) {
+          const pct = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
+          scrollBar.style.width = pct + '%';
+        }
+
+        let currentId = '';
+        sections.forEach((sec) => {
+          if (scrollTop >= sec.offsetTop - 220) {
+            currentId = sec.id;
+          }
+        });
+
+        navLinks.forEach((link) => {
+          const match = link.getAttribute('href') === '#' + currentId;
+          link.classList.toggle('active', match);
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Interactive Power BI Telemetry Preview Filter (Case Study 01)
+      const roleData = {
+        all: {
+          sqlW: 310, sqlPct: '64%',
+          pyW: 295, pyPct: '61%',
+          pbiW: 215, pbiPct: '44%',
+          tabW: 190, tabPct: '39%',
+          caption: 'ACTIVE VIEW: ALL DATA ROLES (400,000+ RECORDS)'
+        },
+        analyst: {
+          sqlW: 345, sqlPct: '72%',
+          pyW: 210, pyPct: '43%',
+          pbiW: 280, pbiPct: '58%',
+          tabW: 245, tabPct: '51%',
+          caption: 'ACTIVE VIEW: DATA & OPERATIONS ANALYST SUBSET'
+        },
+        scientist: {
+          sqlW: 285, sqlPct: '59%',
+          pyW: 365, pyPct: '76%',
+          pbiW: 145, pbiPct: '30%',
+          tabW: 155, tabPct: '32%',
+          caption: 'ACTIVE VIEW: DATA SCIENTIST & ML SUBSET'
+        }
+      };
+
+      const filterChips = document.querySelectorAll('.filter-chip[data-role]');
+      const barSql = document.getElementById('bar-sql');
+      const valSql = document.getElementById('val-sql');
+      const barPy = document.getElementById('bar-py');
+      const valPy = document.getElementById('val-py');
+      const barPbi = document.getElementById('bar-pbi');
+      const valPbi = document.getElementById('val-pbi');
+      const barTab = document.getElementById('bar-tab');
+      const valTab = document.getElementById('val-tab');
+      const dashboardCaption = document.getElementById('dashboardCaption');
+
+      filterChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          filterChips.forEach((c) => c.classList.remove('active'));
+          chip.classList.add('active');
+          const key = chip.getAttribute('data-role');
+          const d = roleData[key];
+          if (!d) return;
+
+          barSql.setAttribute('width', d.sqlW);
+          valSql.setAttribute('x', 95 + d.sqlW + 10);
+          valSql.textContent = d.sqlPct;
+
+          barPy.setAttribute('width', d.pyW);
+          valPy.setAttribute('x', 95 + d.pyW + 10);
+          valPy.textContent = d.pyPct;
+
+          barPbi.setAttribute('width', d.pbiW);
+          valPbi.setAttribute('x', 95 + d.pbiW + 10);
+          valPbi.textContent = d.pbiPct;
+
+          barTab.setAttribute('width', d.tabW);
+          valTab.setAttribute('x', 95 + d.tabW + 10);
+          valTab.textContent = d.tabPct;
+
+          if (dashboardCaption) dashboardCaption.textContent = d.caption;
+        });
+      });
+
+      // Subtle 3D Perspective Tilt on Schematic Visual Cards (Desktop Only)
+      if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(900px) rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 4).toFixed(2)}deg)`;
+          });
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+          });
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
